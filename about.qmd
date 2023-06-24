@@ -1,0 +1,16 @@
+---
+title: "About"
+# image: profile.jpg
+about:
+  template: jolla
+  links:
+    - icon: linkedin
+      text: LinkedIn
+      href: https://linkedin.com/in/mdanyalmalik
+    - icon: github
+      text: Github
+      href: https://github.com/mdanyalmalik
+
+---
+
+Just messing around with random Deep Learning stuff tbh

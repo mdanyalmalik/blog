@@ -1,0 +1,19 @@
+project:
+  type: website
+
+website:
+  title: "Home"
+  navbar:
+    right:
+      - about.qmd
+      - icon: github
+        href: https://github.com/mdanyalmalik
+      - icon: linkedin
+        href: https://linkedin.com/in/mdanyalmalik
+format:
+  html:
+    theme: lux
+    css: styles.css
+
+
+
