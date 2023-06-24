@@ -1,10 +1,24 @@
 [
   {
-    "objectID": "posts/post-with-code/index.html",
-    "href": "posts/post-with-code/index.html",
-    "title": "Post With Code",
+    "objectID": "posts/ai-generated-video/text_to_video.html",
+    "href": "posts/ai-generated-video/text_to_video.html",
+    "title": "AI Generated Videos In Python",
     "section": "",
-    "text": "This is a post with executable code."
+    "text": "Generate videos from text in python using the huggingface diffusers library.\n\n\nImport pytorch and the diffusion pipeline from huggingface diffusers library.\n\nimport torch\nfrom diffusers import DiffusionPipeline\nfrom diffusers.utils import export_to_video\n\n\n\n\nLoading a pre-trained checkpoint to generate a video.\n\n\n\npipe = DiffusionPipeline.from_pretrained(\"damo-vilab/text-to-video-ms-1.7b\", torch_dtype=torch.float16, variant=\"fp16\")\npipe = pipe.to(\"cuda\")\n\n\n\n\n\nprompt = \"Darth Vader is running\"\noutput_path = \"/content/video.mp4\"\n\n\n\n\nMight take a while.\n\nvideo_frames = pipe(prompt).frames\nvideo_path = export_to_video(video_frames, output_path)\nvideo_path\n\n\n\n\n'/content/video.mp4'\n\n\n\n\n\n\nimport imageio\nimport matplotlib.pyplot as plt\nimport matplotlib.animation as animation\nfrom skimage.transform import resize\nfrom IPython.display import HTML\n\ndef display_video(video):\n    fig = plt.figure(figsize=(3,3))\n\n    mov = []\n    for i in range(len(video)):\n        img = plt.imshow(video[i], animated=True)\n        plt.axis('off')\n        mov.append([img])\n\n    anime = animation.ArtistAnimation(fig, mov, interval=100, repeat_delay=1000)\n\n    plt.close()\n    return anime\n\n\nvideo = imageio.mimread(video_path)\nHTML(display_video(video).to_html5_video())\n\n\n  \n  Your browser does not support the video tag."
+  },
+  {
+    "objectID": "posts/ai-generated-video/text_to_video.html#imports",
+    "href": "posts/ai-generated-video/text_to_video.html#imports",
+    "title": "AI Generated Videos In Python",
+    "section": "",
+    "text": "Import pytorch and the diffusion pipeline from huggingface diffusers library.\n\nimport torch\nfrom diffusers import DiffusionPipeline\nfrom diffusers.utils import export_to_video"
+  },
+  {
+    "objectID": "posts/ai-generated-video/text_to_video.html#inference",
+    "href": "posts/ai-generated-video/text_to_video.html#inference",
+    "title": "AI Generated Videos In Python",
+    "section": "",
+    "text": "Loading a pre-trained checkpoint to generate a video.\n\n\n\npipe = DiffusionPipeline.from_pretrained(\"damo-vilab/text-to-video-ms-1.7b\", torch_dtype=torch.float16, variant=\"fp16\")\npipe = pipe.to(\"cuda\")\n\n\n\n\n\nprompt = \"Darth Vader is running\"\noutput_path = \"/content/video.mp4\"\n\n\n\n\nMight take a while.\n\nvideo_frames = pipe(prompt).frames\nvideo_path = export_to_video(video_frames, output_path)\nvideo_path\n\n\n\n\n'/content/video.mp4'\n\n\n\n\n\n\nimport imageio\nimport matplotlib.pyplot as plt\nimport matplotlib.animation as animation\nfrom skimage.transform import resize\nfrom IPython.display import HTML\n\ndef display_video(video):\n    fig = plt.figure(figsize=(3,3))\n\n    mov = []\n    for i in range(len(video)):\n        img = plt.imshow(video[i], animated=True)\n        plt.axis('off')\n        mov.append([img])\n\n    anime = animation.ArtistAnimation(fig, mov, interval=100, repeat_delay=1000)\n\n    plt.close()\n    return anime\n\n\nvideo = imageio.mimread(video_path)\nHTML(display_video(video).to_html5_video())\n\n\n  \n  Your browser does not support the video tag."
   },
   {
     "objectID": "about.html",
@@ -16,8 +30,8 @@
   {
     "objectID": "index.html",
     "href": "index.html",
-    "title": "Danyal’s Blog",
+    "title": "Home",
     "section": "",
-    "text": "Post With Code\n\n\n\n\n\n\n\nnews\n\n\ncode\n\n\nanalysis\n\n\n\n\n\n\n\n\n\n\n\nJun 24, 2023\n\n\nHarlow Malloc\n\n\n\n\n\n\nNo matching items"
+    "text": "AI Generated Videos In Python\n\n\n\n\n\n\n\ncode\n\n\nvideo\n\n\n\n\n\n\n\n\n\n\n\nJun 24, 2023\n\n\nDanyal\n\n\n\n\n\n\nNo matching items"
   }
 ]
