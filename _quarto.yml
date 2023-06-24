@@ -12,6 +12,8 @@ website:
         href: https://github.com/mdanyalmalik
       - icon: linkedin
         href: https://linkedin.com/in/mdanyalmalik
+  google-analytics: "G-0C1TC199G5"
+  
 format:
   html:
     theme: lux
