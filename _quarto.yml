@@ -8,10 +8,12 @@ website:
   navbar:
     right:
       - about.qmd
-      - icon: github
-        href: https://github.com/mdanyalmalik
+      - icon: twitter
+        href: https://twitter.com/_danyalmalik
       - icon: linkedin
         href: https://linkedin.com/in/mdanyalmalik
+      - icon: github
+        href: https://github.com/mdanyalmalik
   google-analytics: "G-0C1TC199G5"
   
 format:
@@ -19,5 +21,6 @@ format:
     theme: lux
     css: styles.css
 
-
+resources:
+  CNAME
 

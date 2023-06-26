@@ -7,6 +7,9 @@ about:
     - icon: linkedin
       text: LinkedIn
       href: https://linkedin.com/in/mdanyalmalik
+    - icon: twitter
+      text: Twitter
+      href: https://twitter.com/_danyalmalik
     - icon: github
       text: Github
       href: https://github.com/mdanyalmalik
