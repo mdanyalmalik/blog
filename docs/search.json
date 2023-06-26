@@ -1,5 +1,61 @@
 [
   {
+    "objectID": "posts/hd-ai-generated-video/zeroscope_v2_XL.html",
+    "href": "posts/hd-ai-generated-video/zeroscope_v2_XL.html",
+    "title": "HD AI Generated Videos in Python (Easy)",
+    "section": "",
+    "text": "A watermark-free Modelscope-based video model capable of generating high quality video at 1024 x 576. Here’s how to use it:\n\n\nImport pytorch and the diffusion pipeline library, along with the export_to_video utility, from the huggingface diffusers library.\n\nimport torch\nfrom diffusers import DiffusionPipeline\nfrom diffusers.utils import export_to_video\n\n\n\n\nLoading the zeroscope v2 model using huggingface.\n(NOTE: to get 1024x576 output replace the first line with the commented line; you will need 15.3gb of VRAM for 24 frames of output at that resolution)\n\npipe = DiffusionPipeline.from_pretrained(\"cerspense/zeroscope_v2_576w\", torch_dtype=torch.float16, variant=\"fp16\")\n# pipe = DiffusionPipeline.from_pretrained(\"cerspense/zeroscope_v2_XL\", torch_dtype=torch.float16, variant=\"fp16\")\n\npipe = pipe.to(\"cuda\")\n\n\n\n\nHere, you can enter a prompt, output path, and length of output video of your choice.\n\nprompt = \"Car driving in city at night\"\noutput_path = \"/content/video.mp4\"\nnum_frames = 24\n\n\n\n\nThe video is generated in this cell and exported as an mp4 file.\n(NOTE: If you are generating 1024x576 output, replace the first line with the commented line again)\n\nvideo_frames = pipe(prompt=prompt, num_frames=num_frames, height=320, width=576).frames\n# video_frames = pipe(prompt=prompt, num_frames=num_frames, height=576, width=1024).frames\n\nvideo_path = export_to_video(video_frames, output_path)\nvideo_path\n\n\n\n\n'/content/video.mp4'\n\n\n\n\n\nA simple function to display the video in the notebook.\n\nimport matplotlib.pyplot as plt\nimport matplotlib.animation as animation\nfrom IPython.display import HTML\n\ndef display_video(video):\n    fig = plt.figure(figsize=(3,3))\n\n    mov = []\n    for i in range(len(video)):\n        img = plt.imshow(video[i], animated=True)\n        plt.axis('off')\n        mov.append([img])\n\n    anime = animation.ArtistAnimation(fig, mov, interval=100, repeat_delay=1000)\n\n    plt.close()\n    return anime\n\n\nHTML(display_video(video_frames).to_html5_video())\n\n\n  \n  Your browser does not support the video tag.\n\n\n\nAnd you’re done! For more information, check out the following links:\n576x320 model: https://huggingface.co/cerspense/zeroscope_v2_576w\n1024x576: https://huggingface.co/cerspense/zeroscope_v2_XL"
+  },
+  {
+    "objectID": "posts/hd-ai-generated-video/zeroscope_v2_XL.html#imports",
+    "href": "posts/hd-ai-generated-video/zeroscope_v2_XL.html#imports",
+    "title": "HD AI Generated Videos in Python (Easy)",
+    "section": "",
+    "text": "Import pytorch and the diffusion pipeline library, along with the export_to_video utility, from the huggingface diffusers library.\n\nimport torch\nfrom diffusers import DiffusionPipeline\nfrom diffusers.utils import export_to_video"
+  },
+  {
+    "objectID": "posts/hd-ai-generated-video/zeroscope_v2_XL.html#loading-pipeline",
+    "href": "posts/hd-ai-generated-video/zeroscope_v2_XL.html#loading-pipeline",
+    "title": "HD AI Generated Videos in Python (Easy)",
+    "section": "",
+    "text": "Loading the zeroscope v2 model using huggingface.\n(NOTE: to get 1024x576 output replace the first line with the commented line; you will need 15.3gb of VRAM for 24 frames of output at that resolution)\n\npipe = DiffusionPipeline.from_pretrained(\"cerspense/zeroscope_v2_576w\", torch_dtype=torch.float16, variant=\"fp16\")\n# pipe = DiffusionPipeline.from_pretrained(\"cerspense/zeroscope_v2_XL\", torch_dtype=torch.float16, variant=\"fp16\")\n\npipe = pipe.to(\"cuda\")"
+  },
+  {
+    "objectID": "posts/hd-ai-generated-video/zeroscope_v2_XL.html#output-information",
+    "href": "posts/hd-ai-generated-video/zeroscope_v2_XL.html#output-information",
+    "title": "HD AI Generated Videos in Python (Easy)",
+    "section": "",
+    "text": "Here, you can enter a prompt, output path, and length of output video of your choice.\n\nprompt = \"Car driving in city at night\"\noutput_path = \"/content/video.mp4\"\nnum_frames = 24"
+  },
+  {
+    "objectID": "posts/hd-ai-generated-video/zeroscope_v2_XL.html#inference",
+    "href": "posts/hd-ai-generated-video/zeroscope_v2_XL.html#inference",
+    "title": "HD AI Generated Videos in Python (Easy)",
+    "section": "",
+    "text": "The video is generated in this cell and exported as an mp4 file.\n(NOTE: If you are generating 1024x576 output, replace the first line with the commented line again)\n\nvideo_frames = pipe(prompt=prompt, num_frames=num_frames, height=320, width=576).frames\n# video_frames = pipe(prompt=prompt, num_frames=num_frames, height=576, width=1024).frames\n\nvideo_path = export_to_video(video_frames, output_path)\nvideo_path\n\n\n\n\n'/content/video.mp4'"
+  },
+  {
+    "objectID": "posts/hd-ai-generated-video/zeroscope_v2_XL.html#playing-the-video",
+    "href": "posts/hd-ai-generated-video/zeroscope_v2_XL.html#playing-the-video",
+    "title": "HD AI Generated Videos in Python (Easy)",
+    "section": "",
+    "text": "A simple function to display the video in the notebook.\n\nimport matplotlib.pyplot as plt\nimport matplotlib.animation as animation\nfrom IPython.display import HTML\n\ndef display_video(video):\n    fig = plt.figure(figsize=(3,3))\n\n    mov = []\n    for i in range(len(video)):\n        img = plt.imshow(video[i], animated=True)\n        plt.axis('off')\n        mov.append([img])\n\n    anime = animation.ArtistAnimation(fig, mov, interval=100, repeat_delay=1000)\n\n    plt.close()\n    return anime\n\n\nHTML(display_video(video_frames).to_html5_video())\n\n\n  \n  Your browser does not support the video tag.\n\n\n\nAnd you’re done! For more information, check out the following links:\n576x320 model: https://huggingface.co/cerspense/zeroscope_v2_576w\n1024x576: https://huggingface.co/cerspense/zeroscope_v2_XL"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Home",
+    "section": "",
+    "text": "HD AI Generated Videos in Python (Easy)\n\n\n\n\n\n\n\ncode\n\n\nvideo\n\n\n\n\n\n\n\n\n\n\n\nJun 26, 2023\n\n\nDanyal Malik\n\n\n\n\n\n\n  \n\n\n\n\nAI Generated Videos In Python\n\n\n\n\n\n\n\ncode\n\n\nvideo\n\n\n\n\n\n\n\n\n\n\n\nJun 24, 2023\n\n\nDanyal Malik\n\n\n\n\n\n\nNo matching items"
+  },
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "About",
+    "section": "",
+    "text": "Just messing around with random Deep Learning stuff tbh"
+  },
+  {
     "objectID": "posts/ai-generated-video/text_to_video.html",
     "href": "posts/ai-generated-video/text_to_video.html",
     "title": "AI Generated Videos In Python",
@@ -19,19 +75,5 @@
     "title": "AI Generated Videos In Python",
     "section": "",
     "text": "Loading a pre-trained checkpoint to generate a video.\n\n\n\npipe = DiffusionPipeline.from_pretrained(\"damo-vilab/text-to-video-ms-1.7b\", torch_dtype=torch.float16, variant=\"fp16\")\npipe = pipe.to(\"cuda\")\n\n\n\n\n\nprompt = \"Darth Vader is running\"\noutput_path = \"/content/video.mp4\"\n\n\n\n\nMight take a while.\n\nvideo_frames = pipe(prompt).frames\nvideo_path = export_to_video(video_frames, output_path)\nvideo_path\n\n\n\n\n'/content/video.mp4'\n\n\n\n\n\n\nimport imageio\nimport matplotlib.pyplot as plt\nimport matplotlib.animation as animation\nfrom skimage.transform import resize\nfrom IPython.display import HTML\n\ndef display_video(video):\n    fig = plt.figure(figsize=(3,3))\n\n    mov = []\n    for i in range(len(video)):\n        img = plt.imshow(video[i], animated=True)\n        plt.axis('off')\n        mov.append([img])\n\n    anime = animation.ArtistAnimation(fig, mov, interval=100, repeat_delay=1000)\n\n    plt.close()\n    return anime\n\n\nvideo = imageio.mimread(video_path)\nHTML(display_video(video).to_html5_video())\n\n\n  \n  Your browser does not support the video tag."
-  },
-  {
-    "objectID": "about.html",
-    "href": "about.html",
-    "title": "About",
-    "section": "",
-    "text": "Just messing around with random Deep Learning stuff tbh"
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "Home",
-    "section": "",
-    "text": "AI Generated Videos In Python\n\n\n\n\n\n\n\ncode\n\n\nvideo\n\n\n\n\n\n\n\n\n\n\n\nJun 24, 2023\n\n\nDanyal\n\n\n\n\n\n\nNo matching items"
   }
 ]
