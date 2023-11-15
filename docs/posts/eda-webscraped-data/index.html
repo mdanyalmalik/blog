@@ -9,7 +9,7 @@
 <meta name="author" content="Danyal Malik, Murtaza Ur Rehman, Daanish Uddin Khan, Noor Ul Hassan, Raiyaan Junaid">
 <meta name="dcterms.date" content="2023-11-25">
 
-<title>Danyal’s Blog - Peforming EDA on Webscraped Data</title>
+<title>Danyal’s Blog - Performing EDA on Webscraped Data</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -160,7 +160,7 @@ gtag('config', 'G-0C1TC199G5', { 'anonymize_ip': true});
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Peforming EDA on Webscraped Data</h1>
+      <div class="quarto-title-block"><div><h1 class="title">Performing EDA on Webscraped Data</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li></ul></div></div>
                                 <div class="quarto-categories">
                 <div class="quarto-category">code</div>
               </div>
@@ -204,19 +204,23 @@ gtag('config', 'G-0C1TC199G5', { 'anonymize_ip': true});
 <section id="imports" class="level3">
 <h3 class="anchored" data-anchor-id="imports">Imports</h3>
 <div class="cell" data-execution_count="1">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plots</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 </section>
 <section id="extracting-data" class="level3">
 <h3 class="anchored" data-anchor-id="extracting-data">Extracting Data</h3>
-<section id="first-we-extract-data-from-the-5-separate-csv-files-and-concatenate-it-into-one-dataframe.-as-all-the-data-was-collected-by-the-same-process-we-will-clean-it-together-and-analyse-each-feature-while-doing-so-in-order-to-iteratively-fix-any-errors-we-find-in-the-dataset." class="level4">
-<h4 class="anchored" data-anchor-id="first-we-extract-data-from-the-5-separate-csv-files-and-concatenate-it-into-one-dataframe.-as-all-the-data-was-collected-by-the-same-process-we-will-clean-it-together-and-analyse-each-feature-while-doing-so-in-order-to-iteratively-fix-any-errors-we-find-in-the-dataset.">First, we extract data from the 5 separate csv files and concatenate it into one dataframe. As all the data was collected by the same process, we will clean it together and analyse each feature while doing so, in order to iteratively fix any errors we find in the dataset.</h4>
+<p>First, we extract data from the 5 separate csv files and concatenate it into one dataframe. As all the data was collected by the same process, we will clean it together and analyse each feature while doing so, in order to iteratively fix any errors we find in the dataset.</p>
 <p>Note: We voluntarily leave some null values in during this section, as not all products had all information available, and the rows can still be useful for analysis later on even with null values (eg if we focus on two features at a time).</p>
 <div class="cell" data-execution_count="2">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>groceriesDF <span class="op">=</span> pd.read_csv(<span class="st">'groceries/data.csv'</span>)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>healthandbeautyDF <span class="op">=</span> pd.read_csv(<span class="st">'health-and-beauty/data.csv'</span>)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>homeappliancesDF <span class="op">=</span> pd.read_csv(<span class="st">'home-appliances/data.csv'</span>)</span>
@@ -225,6 +229,7 @@ gtag('config', 'G-0C1TC199G5', { 'anonymize_ip': true});
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.concat([groceriesDF, healthandbeautyDF, homeappliancesDF, mobilesandtabletsDF, sportsandoutdoorsDF], axis<span class="op">=</span><span class="dv">0</span>, ignore_index<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>df.head(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-display" data-execution_count="2">
 <div>
 
@@ -366,12 +371,12 @@ gtag('config', 'G-0C1TC199G5', { 'anonymize_ip': true});
 </div>
 </div>
 </section>
-</section>
 <section id="setting-datatypes" class="level3">
 <h3 class="anchored" data-anchor-id="setting-datatypes">Setting Datatypes</h3>
-<section id="initially-we-choose-to-set-most-of-the-features-datatypes-to-string-as-this-will-allow-us-to-use-string-methods-to-process-the-entries.-for-example-removing-percentage-signs-so-we-can-later-convert-the-column-to-int" class="level4">
-<h4 class="anchored" data-anchor-id="initially-we-choose-to-set-most-of-the-features-datatypes-to-string-as-this-will-allow-us-to-use-string-methods-to-process-the-entries.-for-example-removing-percentage-signs-so-we-can-later-convert-the-column-to-int">Initially, we choose to set most of the features’ datatypes to string, as this will allow us to use string methods to process the entries. (For example, removing percentage signs so we can later convert the column to int)</h4>
+<p>Initially, we choose to set most of the features’ datatypes to string, as this will allow us to use string methods to process the entries. (For example, removing percentage signs so we can later convert the column to int)</p>
 <div class="cell" data-execution_count="3">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'Name'</span>] <span class="op">=</span> df[<span class="st">'Name'</span>].astype(<span class="bu">str</span>)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'Category'</span>] <span class="op">=</span> df[<span class="st">'Category'</span>].astype(<span class="bu">str</span>)</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'url'</span>] <span class="op">=</span> df[<span class="st">'url'</span>].astype(<span class="bu">str</span>)</span>
@@ -388,6 +393,7 @@ gtag('config', 'G-0C1TC199G5', { 'anonymize_ip': true});
 <span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'Answered Questions'</span>] <span class="op">=</span> df[<span class="st">'Answered Questions'</span>].astype(<span class="bu">str</span>)</span>
 <span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>display(df.dtypes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-display">
 <pre><code>Name                   object
 Category               object
@@ -411,21 +417,22 @@ dtype: object</code></pre>
 </div>
 </div>
 </section>
-</section>
 <section id="processing-the-price-columns" class="level3">
 <h3 class="anchored" data-anchor-id="processing-the-price-columns">Processing the <code>Price</code> Columns</h3>
 <p>These columns are “Original Price” and “Discounted Price”. For each item, the original price is shown. For items with a discount, the Discounted Price is also stored, otherwise it is nan (initially).</p>
-<section id="we-replace-the-nan-values-in-discounted-price-with-the-corresponding-original-price" class="level4">
-<h4 class="anchored" data-anchor-id="we-replace-the-nan-values-in-discounted-price-with-the-corresponding-original-price">We replace the <code>nan</code> values in “Discounted Price” with the corresponding Original Price</h4>
+<p>We replace the <code>nan</code> values in “Discounted Price” with the corresponding Original Price</p>
 <p>This will allow for easier processing as these values will not be ignored later on.</p>
 <div class="cell" data-execution_count="4">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>nan_indices <span class="op">=</span> df[<span class="st">'Discounted Price'</span>] <span class="op">==</span> <span class="st">'nan'</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>df.loc[nan_indices, <span class="st">'Discounted Price'</span>] <span class="op">=</span> df.loc[nan_indices, <span class="st">'Original Price'</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
-</section>
-<section id="we-then-convert-both-original-price-and-discounted-price-to-int-by-removing-the-commas" class="level4">
-<h4 class="anchored" data-anchor-id="we-then-convert-both-original-price-and-discounted-price-to-int-by-removing-the-commas">We then convert both “Original Price” and “Discounted Price” to int by removing the commas</h4>
+<p>We then convert both “Original Price” and “Discounted Price” to int by removing the commas</p>
 <div class="cell" data-execution_count="5">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"Original Price"</span>] <span class="op">=</span> df[<span class="st">"Original Price"</span>].<span class="bu">str</span>.replace(<span class="st">","</span>, <span class="st">""</span>)</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"Discounted Price"</span>] <span class="op">=</span> df[<span class="st">"Discounted Price"</span>].<span class="bu">str</span>.replace(<span class="st">","</span>, <span class="st">""</span>)</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -433,22 +440,24 @@ dtype: object</code></pre>
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"Discounted Price"</span>] <span class="op">=</span> df[<span class="st">"Discounted Price"</span>].astype(<span class="bu">int</span>)</span>
 <span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Checking for NaN values in Discounted Price: </span><span class="sc">{</span><span class="bu">len</span>(df[df[<span class="st">'Discounted Price'</span>] <span class="op">==</span> <span class="st">'nan'</span>])<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Checking for NaN values in Discounted Price: 0</code></pre>
 </div>
 </div>
-</section>
-<section id="for-further-analysis-later-on-we-can-define-another-column-indicating-whether-there-was-a-discount-on-the-item" class="level4">
-<h4 class="anchored" data-anchor-id="for-further-analysis-later-on-we-can-define-another-column-indicating-whether-there-was-a-discount-on-the-item">For further analysis later on, we can define another column indicating whether there was a discount on the item</h4>
+<p>For further analysis later on, we can define another column indicating whether there was a discount on the item</p>
 <div class="cell" data-execution_count="6">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"Discount"</span>] <span class="op">=</span> <span class="va">True</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>df.loc[nan_indices, <span class="st">"Discount"</span>] <span class="op">=</span> <span class="va">False</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
-</section>
-<section id="finally-we-view-the-statistics-and-some-sample-points-to-ensure-everything-is-in-order" class="level4">
-<h4 class="anchored" data-anchor-id="finally-we-view-the-statistics-and-some-sample-points-to-ensure-everything-is-in-order">Finally, we view the statistics and some sample points to ensure everything is in order</h4>
+<p>Finally, we view the statistics and some sample points to ensure everything is in order</p>
 <div class="cell" data-execution_count="7">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Sampling 5 points from each category to see if Discount column is working correctly: "</span>)</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>display(df.loc[nan_indices, [<span class="st">'Original Price'</span>, <span class="st">'Discounted Price'</span>, <span class="st">"Discount"</span>]].sample(<span class="dv">5</span>))</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>display(df.loc[<span class="op">~</span>nan_indices, [<span class="st">'Original Price'</span>, <span class="st">'Discounted Price'</span>, <span class="st">"Discount"</span>]].sample(<span class="dv">5</span>))</span>
@@ -456,6 +465,7 @@ Checking for NaN values in Discounted Price: 0</code></pre>
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Statistics for Price"</span>)</span>
 <span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>display(df[[<span class="st">"Original Price"</span>, <span class="st">"Discounted Price"</span>]].describe().loc[[<span class="st">"mean"</span>, <span class="st">"std"</span>, <span class="st">"min"</span>, <span class="st">"max"</span>]])</span>
 <span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>display(df[[<span class="st">"Original Price"</span>, <span class="st">"Discounted Price"</span>, <span class="st">"Discount"</span>]].dtypes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>
 Sampling 5 points from each category to see if Discount column is working correctly: 
@@ -605,24 +615,26 @@ dtype: object</code></pre>
 </div>
 </div>
 </section>
-</section>
 <section id="processing-reviews-column" class="level3">
 <h3 class="anchored" data-anchor-id="processing-reviews-column">Processing <code>Reviews</code> Column</h3>
 <p>This column represents the number of reviews for each product.</p>
-<section id="we-convert-the-column-to-int" class="level4">
-<h4 class="anchored" data-anchor-id="we-convert-the-column-to-int">We convert the column to int</h4>
+<p>We convert the column to int</p>
 <p>To do this, we replace “No” entries in the Reviews column with 0</p>
 <div class="cell" data-execution_count="8">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>df.loc[df[<span class="st">'Reviews'</span>] <span class="op">==</span> <span class="st">'No'</span>, <span class="st">'Reviews'</span>] <span class="op">=</span> <span class="st">'0'</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'Reviews'</span>] <span class="op">=</span> df[<span class="st">'Reviews'</span>].astype(<span class="bu">int</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
-</section>
-<section id="then-we-analyse-the-statistics-to-verify-everything-is-working" class="level4">
-<h4 class="anchored" data-anchor-id="then-we-analyse-the-statistics-to-verify-everything-is-working">Then, we analyse the statistics to verify everything is working</h4>
+<p>Then, we analyse the statistics to verify everything is working</p>
 <div class="cell" data-execution_count="9">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Reviews Statistics"</span>)</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>display(df[[<span class="st">"Reviews"</span>]].describe().loc[[<span class="st">"mean"</span>, <span class="st">"std"</span>, <span class="st">"min"</span>, <span class="st">"max"</span>]])</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Data Type: </span><span class="sc">{</span>df[<span class="st">'Reviews'</span>]<span class="sc">.</span>dtype<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Reviews Statistics
 Data Type: int32</code></pre>
@@ -662,47 +674,56 @@ Data Type: int32</code></pre>
 </div>
 </div>
 </section>
-</section>
 <section id="processing-the-seller-rating-ship-on-time-and-chat-response-time-columns" class="level3">
 <h3 class="anchored" data-anchor-id="processing-the-seller-rating-ship-on-time-and-chat-response-time-columns">Processing the <code>Seller Rating</code>, <code>Ship on Time</code> and <code>Chat Response Time</code> Columns</h3>
 <p>These columns contain the percentage value for each. The first represents positive seller rating percentage, the second: the percentage of time the order ships on time, and the third: the percentage of chat responses.</p>
-<section id="we-convert-each-of-these-to-int-and-we-purposely-convert-the-entries-with-not-enough-data-to-nan-so-we-can-discard-them-from-our-calculations-later-on." class="level4">
-<h4 class="anchored" data-anchor-id="we-convert-each-of-these-to-int-and-we-purposely-convert-the-entries-with-not-enough-data-to-nan-so-we-can-discard-them-from-our-calculations-later-on.">We convert each of these to int, and we purposely convert the entries with not enough data to NaN, so we can discard them from our calculations later on.</h4>
+<p>We convert each of these to int, and we purposely convert the entries with not enough data to NaN, so we can discard them from our calculations later on.</p>
 <div class="cell" data-execution_count="10">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>df.loc[df[<span class="st">'Seller Rating'</span>] <span class="op">==</span> <span class="st">'New Seller'</span>, <span class="st">'Seller Rating'</span>] <span class="op">=</span> <span class="st">'-1'</span></span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>df.loc[df[<span class="st">'Seller Rating'</span>] <span class="op">==</span> <span class="st">'Not enough data'</span>, <span class="st">'Seller Rating'</span>] <span class="op">=</span> <span class="st">'-1'</span></span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'Seller Rating'</span>] <span class="op">=</span> df[<span class="st">'Seller Rating'</span>].<span class="bu">str</span>.replace(<span class="st">'%'</span>, <span class="st">''</span>)</span>
 <span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'Seller Rating'</span>] <span class="op">=</span> df[<span class="st">'Seller Rating'</span>].astype(<span class="bu">int</span>)</span>
 <span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'Seller Rating'</span>] <span class="op">=</span> df[<span class="st">'Seller Rating'</span>] <span class="op">/</span> <span class="dv">100</span></span>
 <span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>df.loc[df[<span class="st">'Seller Rating'</span>] <span class="op">&lt;</span> <span class="dv">0</span>, <span class="st">'Seller Rating'</span>] <span class="op">=</span> pd.NA</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <div class="cell" data-execution_count="11">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>df.loc[df[<span class="st">'Ship on Time'</span>] <span class="op">==</span> <span class="st">'Not enough data'</span>, <span class="st">'Ship on Time'</span>] <span class="op">=</span> <span class="st">'-1'</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'Ship on Time'</span>] <span class="op">=</span> df[<span class="st">'Ship on Time'</span>].<span class="bu">str</span>.replace(<span class="st">'%'</span>, <span class="st">''</span>)</span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'Ship on Time'</span>] <span class="op">=</span> df[<span class="st">'Ship on Time'</span>].astype(<span class="bu">int</span>)</span>
 <span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'Ship on Time'</span>] <span class="op">=</span> df[<span class="st">'Ship on Time'</span>] <span class="op">/</span> <span class="dv">100</span></span>
 <span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>df.loc[df[<span class="st">'Ship on Time'</span>] <span class="op">&lt;</span> <span class="dv">0</span>, <span class="st">'Ship on Time'</span>] <span class="op">=</span> pd.NA</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
 <div class="cell" data-execution_count="12">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>df.loc[df[<span class="st">'Chat Response Time'</span>] <span class="op">==</span> <span class="st">'Not enough data'</span>, <span class="st">'Chat Response Time'</span>] <span class="op">=</span> <span class="st">'-1'</span></span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>df.loc[df[<span class="st">'Chat Response Time'</span>] <span class="op">==</span> <span class="st">'nan'</span>, <span class="st">'Chat Response Time'</span>] <span class="op">=</span> <span class="st">'-1'</span></span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'Chat Response Time'</span>] <span class="op">=</span> df[<span class="st">'Chat Response Time'</span>].<span class="bu">str</span>.replace(<span class="st">'%'</span>, <span class="st">''</span>)</span>
 <span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'Chat Response Time'</span>] <span class="op">=</span> df[<span class="st">'Chat Response Time'</span>].astype(<span class="bu">int</span>)</span>
 <span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'Chat Response Time'</span>] <span class="op">=</span> df[<span class="st">'Chat Response Time'</span>] <span class="op">/</span> <span class="dv">100</span></span>
 <span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>df.loc[df[<span class="st">'Chat Response Time'</span>] <span class="op">&lt;</span> <span class="dv">0</span>, <span class="st">'Chat Response Time'</span>] <span class="op">=</span> pd.NA</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
-</section>
-<section id="fixing-the-name-of-chat-response-time-by-changing-it-to-chat-response-rate" class="level4">
-<h4 class="anchored" data-anchor-id="fixing-the-name-of-chat-response-time-by-changing-it-to-chat-response-rate">Fixing the name of <code>Chat Response Time</code> by changing it to <code>Chat Response Rate</code></h4>
+<p>Fixing the name of <code>Chat Response Time</code> by changing it to <code>Chat Response Rate</code></p>
 <div class="cell" data-execution_count="13">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df.rename(columns<span class="op">=</span>{<span class="st">"Chat Response Time"</span>:<span class="st">"Chat Response Rate"</span>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
-</section>
-<section id="viewing-statistics-to-ensure-everything-is-in-order" class="level4">
-<h4 class="anchored" data-anchor-id="viewing-statistics-to-ensure-everything-is-in-order">Viewing statistics to ensure everything is in order</h4>
+<p>Viewing statistics to ensure everything is in order</p>
 <div class="cell" data-execution_count="15">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Statistics"</span>)</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>display(df[[<span class="st">"Seller Rating"</span>, <span class="st">"Ship on Time"</span>, <span class="st">"Chat Response Rate"</span>]].describe().loc[[<span class="st">"mean"</span>, <span class="st">"std"</span>, <span class="st">"min"</span>, <span class="st">"max"</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Statistics</code></pre>
 </div>
@@ -752,8 +773,11 @@ Data Type: int32</code></pre>
 </div>
 <p>We can see that the ship on time column has either not been scraped properly or there is some other issue, as all the values being 100% does not make any sense. So we will remove it.</p>
 <div class="cell" data-execution_count="16">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df.drop(columns<span class="op">=</span>[<span class="st">"Ship on Time"</span>])</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>df.columns</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-display" data-execution_count="16">
 <pre><code>Index(['Name', 'Category', 'Daraz Mall', 'url', 'Original Price',
        'Discounted Price', 'Rating', 'Reviews', 'Seller', 'Seller Rating',
@@ -763,13 +787,15 @@ Data Type: int32</code></pre>
 </div>
 </div>
 </section>
-</section>
 <section id="processing-the-warranty-column" class="level3">
 <h3 class="anchored" data-anchor-id="processing-the-warranty-column">Processing the <code>Warranty</code> Column</h3>
 <p>This column contains the length of the period the warranty is valid for, but we need to parse this in order to convert it to a number value.</p>
 <div class="cell" data-execution_count="17">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Values in Warranty Column: </span><span class="ch">\n</span><span class="st">"</span>)</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df[<span class="st">"Warranty"</span>].unique())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Values in Warranty Column: 
 
@@ -787,9 +813,10 @@ Data Type: int32</code></pre>
  '6 Months Brand Warranty' '5 Years Seller Warranty']</code></pre>
 </div>
 </div>
-<section id="converting-the-strings-to-easily-interpretable-strings-for-further-processing" class="level4">
-<h4 class="anchored" data-anchor-id="converting-the-strings-to-easily-interpretable-strings-for-further-processing">Converting the strings to easily interpretable strings for further processing</h4>
+<p>Converting the strings to easily interpretable strings for further processing</p>
 <div class="cell" data-execution_count="18">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>df.loc[df[<span class="st">'Warranty'</span>] <span class="op">==</span> <span class="st">'No warranty'</span>, <span class="st">'Warranty'</span>] <span class="op">=</span> <span class="st">'0'</span></span>
 <span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>df.loc[df[<span class="st">'Warranty'</span>] <span class="op">==</span> <span class="st">'1 Month Local seller warranty'</span>, <span class="st">'Warranty'</span>] <span class="op">=</span> <span class="st">'1m'</span></span>
 <span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>df.loc[df[<span class="st">'Warranty'</span>] <span class="op">==</span> <span class="st">'2 Months Brand Warranty'</span>, <span class="st">'Warranty'</span>] <span class="op">=</span> <span class="st">'2m'</span></span>
@@ -816,12 +843,13 @@ Data Type: int32</code></pre>
 <span id="cb25-24"><a href="#cb25-24" aria-hidden="true" tabindex="-1"></a>df.loc[df[<span class="st">'Warranty'</span>] <span class="op">==</span> <span class="st">'6 Months Brand Warranty'</span>, <span class="st">'Warranty'</span>] <span class="op">=</span> <span class="st">'6m'</span></span>
 <span id="cb25-25"><a href="#cb25-25" aria-hidden="true" tabindex="-1"></a>df.loc[df[<span class="st">'Warranty'</span>] <span class="op">==</span> <span class="st">'5 Years Seller Warranty'</span>, <span class="st">'Warranty'</span>] <span class="op">=</span> <span class="st">'5y'</span></span>
 <span id="cb25-26"><a href="#cb25-26" aria-hidden="true" tabindex="-1"></a>df.loc[df[<span class="st">'Warranty'</span>] <span class="op">==</span> <span class="st">'Life Time Warranty Local seller warranty'</span>, <span class="st">'Warranty'</span>] <span class="op">=</span> <span class="st">'inf'</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
-</section>
-<section id="converting-the-column-to-int-by-representing-them-with-the-unit-of-months" class="level4">
-<h4 class="anchored" data-anchor-id="converting-the-column-to-int-by-representing-them-with-the-unit-of-months">Converting the column to int by representing them with the unit of months</h4>
+<p>Converting the column to int by representing them with the unit of months</p>
 <p>Note: NaN in this column represents lifetime warranty, as we cannot include infinity in statistical analysis</p>
 <div class="cell" data-execution_count="19">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>warranty <span class="op">=</span> pd.Series([<span class="dv">0</span> <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(df))])</span>
 <span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>warranty[df[<span class="st">"Warranty"</span>] <span class="op">==</span> <span class="st">'inf'</span>] <span class="op">=</span> pd.NA</span>
 <span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -836,6 +864,7 @@ Data Type: int32</code></pre>
 <span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Statistics"</span>)</span>
 <span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a>display(df[[<span class="st">"Warranty"</span>]].describe().loc[[<span class="st">"mean"</span>, <span class="st">"std"</span>, <span class="st">"min"</span>, <span class="st">"max"</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Statistics</code></pre>
 </div>
@@ -874,15 +903,16 @@ Data Type: int32</code></pre>
 </div>
 </div>
 </section>
-</section>
 <section id="processing-the-return-column" class="level3">
 <h3 class="anchored" data-anchor-id="processing-the-return-column">Processing the <code>Return</code> Column</h3>
 <p>This column, similar to <code>Warranty</code>, represents the return policy, along with the period allowed.</p>
-<section id="analysing-unique-values-in-the-column" class="level4">
-<h4 class="anchored" data-anchor-id="analysing-unique-values-in-the-column">Analysing unique values in the column</h4>
+<p>Analysing unique values in the column</p>
 <div class="cell" data-execution_count="20">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Values in Return Column"</span>)</span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df[<span class="st">"Return Time"</span>].unique())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Values in Return Column
 ['No Return']</code></pre>
@@ -890,8 +920,11 @@ Data Type: int32</code></pre>
 </div>
 <p>We can see that this column was also not extracted properly, as there is only one type of value. So we drop it.</p>
 <div class="cell" data-execution_count="21">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df.drop(columns<span class="op">=</span>[<span class="st">"Return Time"</span>])</span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>df.columns</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-display" data-execution_count="21">
 <pre><code>Index(['Name', 'Category', 'Daraz Mall', 'url', 'Original Price',
        'Discounted Price', 'Rating', 'Reviews', 'Seller', 'Seller Rating',
@@ -901,13 +934,13 @@ Data Type: int32</code></pre>
 </div>
 </div>
 </section>
-</section>
 <section id="processing-the-delivery-charges-and-answered-questions-column" class="level3">
 <h3 class="anchored" data-anchor-id="processing-the-delivery-charges-and-answered-questions-column">Processing the <code>Delivery Charges</code> and <code>Answered Questions</code> Column</h3>
 <p>These columns contains the additional charges for delivery of the product, and the number of customer questions answered by the seller under the product.</p>
-<section id="convert-the-columns-to-int" class="level4">
-<h4 class="anchored" data-anchor-id="convert-the-columns-to-int">Convert the columns to int</h4>
+<p>Convert the columns to int</p>
 <div class="cell" data-execution_count="22">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>df.loc[df[<span class="st">'Delivery Charges'</span>] <span class="op">==</span> <span class="st">'Free'</span>, <span class="st">'Delivery Charges'</span>] <span class="op">=</span> <span class="st">'0'</span></span>
 <span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>df.loc[df[<span class="st">'Delivery Charges'</span>] <span class="op">==</span> <span class="st">'nan'</span>, <span class="st">'Delivery Charges'</span>] <span class="op">=</span> <span class="st">'-1'</span></span>
 <span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'Delivery Charges'</span>] <span class="op">=</span> df[<span class="st">'Delivery Charges'</span>].<span class="bu">str</span>.replace(<span class="st">'Rs. '</span>, <span class="st">''</span>)</span>
@@ -918,12 +951,14 @@ Data Type: int32</code></pre>
 <span id="cb32-8"><a href="#cb32-8" aria-hidden="true" tabindex="-1"></a>df.loc[df[<span class="st">'Answered Questions'</span>] <span class="op">==</span> <span class="st">'nan'</span>, <span class="st">'Answered Questions'</span>] <span class="op">=</span> <span class="st">'0'</span></span>
 <span id="cb32-9"><a href="#cb32-9" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'Answered Questions'</span>] <span class="op">=</span> df[<span class="st">'Answered Questions'</span>].astype(<span class="bu">float</span>)</span>
 <span id="cb32-10"><a href="#cb32-10" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'Answered Questions'</span>] <span class="op">=</span> df[<span class="st">'Answered Questions'</span>].astype(<span class="bu">int</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
-</section>
-<section id="checking-statistics" class="level4">
-<h4 class="anchored" data-anchor-id="checking-statistics">Checking statistics</h4>
+<p>Checking statistics</p>
 <div class="cell" data-execution_count="23">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>display(df[[<span class="st">"Delivery Charges"</span>, <span class="st">"Answered Questions"</span>]].describe().loc[[<span class="st">"mean"</span>, <span class="st">"std"</span>, <span class="st">"min"</span>, <span class="st">"max"</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-display">
 <div>
 
@@ -964,21 +999,25 @@ Data Type: int32</code></pre>
 </div>
 </div>
 </section>
-</section>
 <section id="some-other-odd-jobs" class="level3">
 <h3 class="anchored" data-anchor-id="some-other-odd-jobs">Some other odd jobs</h3>
-<section id="removing-sfo-column" class="level4">
-<h4 class="anchored" data-anchor-id="removing-sfo-column">Removing <code>SFO</code> Column</h4>
+<p>Removing <code>SFO</code> Column</p>
 <p>The column represents whether the product is shipped from overseas. But, all the entries are false, so there was some issue when collecting the data. Hence, we remove this column too.</p>
 <div class="cell" data-execution_count="24">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df[<span class="st">"SFO"</span>].unique())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[False]</code></pre>
 </div>
 </div>
 <div class="cell" data-execution_count="25">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df.drop(columns<span class="op">=</span>[<span class="st">"SFO"</span>])</span>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>df.columns</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-display" data-execution_count="25">
 <pre><code>Index(['Name', 'Category', 'Daraz Mall', 'url', 'Original Price',
        'Discounted Price', 'Rating', 'Reviews', 'Seller', 'Seller Rating',
@@ -987,11 +1026,11 @@ Data Type: int32</code></pre>
       dtype='object')</code></pre>
 </div>
 </div>
-</section>
-<section id="fixing-category-formatting" class="level4">
-<h4 class="anchored" data-anchor-id="fixing-category-formatting">Fixing Category Formatting</h4>
+<p>Fixing Category Formatting</p>
 <p>This column represents the category along with all the subcategories of the product</p>
 <div class="cell" data-execution_count="26">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Before"</span>)</span>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df[<span class="st">"Name"</span>].head(<span class="dv">1</span>).item())</span>
 <span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df[<span class="st">"Category"</span>].head(<span class="dv">1</span>).item())</span>
@@ -1002,6 +1041,7 @@ Data Type: int32</code></pre>
 <span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"After"</span>)</span>
 <span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df[<span class="st">"Name"</span>].head(<span class="dv">1</span>).item())</span>
 <span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df[<span class="st">"Category"</span>].head(<span class="dv">1</span>).item())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Before
 Daal Moong/Mong - 1Kg (Premium Grains) - Zeest
@@ -1012,11 +1052,13 @@ Groceries, Canned, Dry &amp; Packaged Foods, Grains, Beans &amp; Pulses, Lentils
 </div>
 </div>
 </section>
-</section>
 <section id="final-analysis-of-the-dataset" class="level3">
 <h3 class="anchored" data-anchor-id="final-analysis-of-the-dataset">Final Analysis of the Dataset</h3>
 <div class="cell" data-execution_count="27">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>df.describe(include<span class="op">=</span><span class="st">"all"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-display" data-execution_count="27">
 <div>
 
@@ -1259,10 +1301,12 @@ Groceries, Canned, Dry &amp; Packaged Foods, Grains, Beans &amp; Pulses, Lentils
 </div>
 </div>
 </div>
-<section id="remaining-columns-described" class="level4">
-<h4 class="anchored" data-anchor-id="remaining-columns-described">Remaining Columns Described</h4>
+<p>Remaining Columns Described</p>
 <div class="cell" data-execution_count="28">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df.dtypes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Name                   object
 Category               object
@@ -1288,13 +1332,13 @@ dtype: object</code></pre>
 <p>Rating: Float dtype; 0 to 5 star average product rating</p>
 <p>Seller: String dtype; the name of the seller</p>
 <p>Brand: String dtype; the name of the brand</p>
-</section>
-<section id="finally-we-save-the-processed-dataset" class="level4">
-<h4 class="anchored" data-anchor-id="finally-we-save-the-processed-dataset">Finally, we save the processed dataset</h4>
+<p>Finally, we save the processed dataset</p>
 <div class="cell">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>df.to_csv(path_or_buf<span class="op">=</span><span class="st">"final_dataset.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 </div>
-</section>
 </section>
 </section>
 <section id="section-2a-visualisation-of-the-dataset---univariate-analysis" class="level2">
@@ -1392,6 +1436,57 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
+  const viewSource = window.document.getElementById('quarto-view-source') ||
+                     window.document.getElementById('quarto-code-tools-source');
+  if (viewSource) {
+    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+    viewSource.addEventListener("click", function(e) {
+      if (sourceUrl) {
+        // rstudio viewer pane
+        if (/\bcapabilities=\b/.test(window.location)) {
+          window.open(sourceUrl);
+        } else {
+          window.location.href = sourceUrl;
+        }
+      } else {
+        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+        modal.show();
+      }
+      return false;
+    });
+  }
+  function toggleCodeHandler(show) {
+    return function(e) {
+      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+      for (let i=0; i<detailsSrc.length; i++) {
+        const details = detailsSrc[i].parentElement;
+        if (show) {
+          details.open = true;
+        } else {
+          details.removeAttribute("open");
+        }
+      }
+      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+      const fromCls = show ? "hidden" : "unhidden";
+      const toCls = show ? "unhidden" : "hidden";
+      for (let i=0; i<cellCodeDivs.length; i++) {
+        const codeDiv = cellCodeDivs[i];
+        if (codeDiv.classList.contains(fromCls)) {
+          codeDiv.classList.remove(fromCls);
+          codeDiv.classList.add(toCls);
+        } 
+      }
+      return false;
+    }
+  }
+  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+  if (hideAllCode) {
+    hideAllCode.addEventListener("click", toggleCodeHandler(false));
+  }
+  const showAllCode = window.document.getElementById("quarto-show-all-code");
+  if (showAllCode) {
+    showAllCode.addEventListener("click", toggleCodeHandler(true));
+  }
   function tippyHover(el, contentFn) {
     const config = {
       allowHTML: true,
