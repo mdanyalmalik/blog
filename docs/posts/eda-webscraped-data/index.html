@@ -207,7 +207,7 @@ gtag('config', 'G-0C1TC199G5', { 'anonymize_ip': true});
 <p>In this section, we will clean the dataset column by column. This will also give an overview of each column in the process. We will then describe any remaining columns at the end.</p>
 <section id="imports" class="level3">
 <h3 class="anchored" data-anchor-id="imports">Imports</h3>
-<div class="cell" data-execution_count="44">
+<div class="cell" data-execution_count="1">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -223,7 +223,7 @@ gtag('config', 'G-0C1TC199G5', { 'anonymize_ip': true});
 <h3 class="anchored" data-anchor-id="extracting-data">Extracting Data</h3>
 <p>First, we extract data from the 5 separate csv files and concatenate it into one dataframe. As all the data was collected by the same process, we will clean it together and analyse each feature while doing so, in order to iteratively fix any errors we find in the dataset.</p>
 <p>Note: We voluntarily leave some null values in during this section, as not all products had all information available, and the rows can still be useful for analysis later on even with null values (eg if we focus on two features at a time).</p>
-<div class="cell" data-execution_count="45">
+<div class="cell" data-execution_count="2">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>groceriesDF <span class="op">=</span> pd.read_csv(<span class="st">'groceries/data.csv'</span>)</span>
@@ -235,7 +235,7 @@ gtag('config', 'G-0C1TC199G5', { 'anonymize_ip': true});
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> pd.concat([groceriesDF, healthandbeautyDF, homeappliancesDF, mobilesandtabletsDF, sportsandoutdoorsDF], axis<span class="op">=</span><span class="dv">0</span>, ignore_index<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>df.head(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="45">
+<div class="cell-output cell-output-display" data-execution_count="2">
 <div>
 
 
@@ -379,7 +379,7 @@ gtag('config', 'G-0C1TC199G5', { 'anonymize_ip': true});
 <section id="setting-datatypes" class="level3">
 <h3 class="anchored" data-anchor-id="setting-datatypes">Setting Datatypes</h3>
 <p>Initially, we choose to set most of the features’ datatypes to string, as this will allow us to use string methods to process the entries. (For example, removing percentage signs so we can later convert the column to int)</p>
-<div class="cell" data-execution_count="46">
+<div class="cell" data-execution_count="5">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'Name'</span>] <span class="op">=</span> df[<span class="st">'Name'</span>].astype(<span class="bu">str</span>)</span>
@@ -427,7 +427,7 @@ dtype: object</code></pre>
 <p>These columns are “Original Price” and “Discounted Price”. For each item, the original price is shown. For items with a discount, the Discounted Price is also stored, otherwise it is nan (initially).</p>
 <p>We replace the <code>nan</code> values in “Discounted Price” with the corresponding Original Price</p>
 <p>This will allow for easier processing as these values will not be ignored later on.</p>
-<div class="cell" data-execution_count="47">
+<div class="cell" data-execution_count="6">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>nan_indices <span class="op">=</span> df[<span class="st">'Discounted Price'</span>] <span class="op">==</span> <span class="st">'nan'</span></span>
@@ -435,7 +435,7 @@ dtype: object</code></pre>
 </details>
 </div>
 <p>We then convert both “Original Price” and “Discounted Price” to int by removing the commas</p>
-<div class="cell" data-execution_count="48">
+<div class="cell" data-execution_count="7">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"Original Price"</span>] <span class="op">=</span> df[<span class="st">"Original Price"</span>].<span class="bu">str</span>.replace(<span class="st">","</span>, <span class="st">""</span>)</span>
@@ -452,7 +452,7 @@ Checking for NaN values in Discounted Price: 0</code></pre>
 </div>
 </div>
 <p>For further analysis later on, we can define another column indicating whether there was a discount on the item</p>
-<div class="cell" data-execution_count="49">
+<div class="cell" data-execution_count="8">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">"Discount"</span>] <span class="op">=</span> <span class="va">True</span></span>
@@ -460,7 +460,7 @@ Checking for NaN values in Discounted Price: 0</code></pre>
 </details>
 </div>
 <p>Finally, we view the statistics and some sample points to ensure everything is in order</p>
-<div class="cell" data-execution_count="50">
+<div class="cell" data-execution_count="9">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">Sampling 5 points from each category to see if Discount column is working correctly: "</span>)</span>
@@ -491,33 +491,33 @@ Statistics for Price</code></pre>
 </thead>
 <tbody>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">400</td>
-<td>399</td>
-<td>399</td>
+<td data-quarto-table-cell-role="th">1318</td>
+<td>1648</td>
+<td>1648</td>
 <td>False</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">2369</td>
-<td>249</td>
-<td>249</td>
+<td data-quarto-table-cell-role="th">61</td>
+<td>100</td>
+<td>100</td>
 <td>False</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">680</td>
-<td>99</td>
-<td>99</td>
+<td data-quarto-table-cell-role="th">468</td>
+<td>850</td>
+<td>850</td>
 <td>False</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">352</td>
-<td>530</td>
-<td>530</td>
+<td data-quarto-table-cell-role="th">471</td>
+<td>8000</td>
+<td>8000</td>
 <td>False</td>
 </tr>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">407</td>
-<td>1050</td>
-<td>1050</td>
+<td data-quarto-table-cell-role="th">474</td>
+<td>429</td>
+<td>429</td>
 <td>False</td>
 </tr>
 </tbody>
@@ -540,33 +540,33 @@ Statistics for Price</code></pre>
 </thead>
 <tbody>
 <tr class="odd">
-<td data-quarto-table-cell-role="th">1817</td>
-<td>799</td>
-<td>295</td>
+<td data-quarto-table-cell-role="th">2001</td>
+<td>4599</td>
+<td>3314</td>
 <td>True</td>
 </tr>
 <tr class="even">
-<td data-quarto-table-cell-role="th">2063</td>
-<td>800</td>
-<td>545</td>
-<td>True</td>
-</tr>
-<tr class="odd">
-<td data-quarto-table-cell-role="th">2101</td>
-<td>350</td>
-<td>279</td>
-<td>True</td>
-</tr>
-<tr class="even">
-<td data-quarto-table-cell-role="th">826</td>
-<td>149</td>
-<td>120</td>
-<td>True</td>
-</tr>
-<tr class="odd">
 <td data-quarto-table-cell-role="th">1349</td>
 <td>5000</td>
 <td>2199</td>
+<td>True</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">111</td>
+<td>199</td>
+<td>150</td>
+<td>True</td>
+</tr>
+<tr class="even">
+<td data-quarto-table-cell-role="th">2246</td>
+<td>1200</td>
+<td>550</td>
+<td>True</td>
+</tr>
+<tr class="odd">
+<td data-quarto-table-cell-role="th">722</td>
+<td>1232</td>
+<td>540</td>
 <td>True</td>
 </tr>
 </tbody>
@@ -625,7 +625,7 @@ dtype: object</code></pre>
 <p>This column represents the number of reviews for each product.</p>
 <p>We convert the column to int</p>
 <p>To do this, we replace “No” entries in the Reviews column with 0</p>
-<div class="cell" data-execution_count="51">
+<div class="cell" data-execution_count="10">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>df.loc[df[<span class="st">'Reviews'</span>] <span class="op">==</span> <span class="st">'No'</span>, <span class="st">'Reviews'</span>] <span class="op">=</span> <span class="st">'0'</span></span>
@@ -633,7 +633,7 @@ dtype: object</code></pre>
 </details>
 </div>
 <p>Then, we analyse the statistics to verify everything is working</p>
-<div class="cell" data-execution_count="52">
+<div class="cell" data-execution_count="11">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Reviews Statistics"</span>)</span>
@@ -683,7 +683,7 @@ Data Type: int32</code></pre>
 <h3 class="anchored" data-anchor-id="processing-the-seller-rating-ship-on-time-and-chat-response-time-columns">Processing the <code>Seller Rating</code>, <code>Ship on Time</code> and <code>Chat Response Time</code> Columns</h3>
 <p>These columns contain the percentage value for each. The first represents positive seller rating percentage, the second: the percentage of time the order ships on time, and the third: the percentage of chat responses.</p>
 <p>We convert each of these to int, and we purposely convert the entries with not enough data to NaN, so we can discard them from our calculations later on.</p>
-<div class="cell" data-execution_count="53">
+<div class="cell" data-execution_count="12">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>df.loc[df[<span class="st">'Seller Rating'</span>] <span class="op">==</span> <span class="st">'New Seller'</span>, <span class="st">'Seller Rating'</span>] <span class="op">=</span> <span class="st">'-1'</span></span>
@@ -694,7 +694,7 @@ Data Type: int32</code></pre>
 <span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>df.loc[df[<span class="st">'Seller Rating'</span>] <span class="op">&lt;</span> <span class="dv">0</span>, <span class="st">'Seller Rating'</span>] <span class="op">=</span> pd.NA</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div class="cell" data-execution_count="54">
+<div class="cell" data-execution_count="13">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>df.loc[df[<span class="st">'Ship on Time'</span>] <span class="op">==</span> <span class="st">'Not enough data'</span>, <span class="st">'Ship on Time'</span>] <span class="op">=</span> <span class="st">'-1'</span></span>
@@ -704,7 +704,7 @@ Data Type: int32</code></pre>
 <span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>df.loc[df[<span class="st">'Ship on Time'</span>] <span class="op">&lt;</span> <span class="dv">0</span>, <span class="st">'Ship on Time'</span>] <span class="op">=</span> pd.NA</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
-<div class="cell" data-execution_count="55">
+<div class="cell" data-execution_count="14">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>df.loc[df[<span class="st">'Chat Response Time'</span>] <span class="op">==</span> <span class="st">'Not enough data'</span>, <span class="st">'Chat Response Time'</span>] <span class="op">=</span> <span class="st">'-1'</span></span>
@@ -716,14 +716,14 @@ Data Type: int32</code></pre>
 </details>
 </div>
 <p>Fixing the name of <code>Chat Response Time</code> by changing it to <code>Chat Response Rate</code></p>
-<div class="cell" data-execution_count="56">
+<div class="cell" data-execution_count="15">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df.rename(columns<span class="op">=</span>{<span class="st">"Chat Response Time"</span>:<span class="st">"Chat Response Rate"</span>})</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p>Viewing statistics to ensure everything is in order</p>
-<div class="cell" data-execution_count="57">
+<div class="cell" data-execution_count="16">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Statistics"</span>)</span>
@@ -777,13 +777,13 @@ Data Type: int32</code></pre>
 </div>
 </div>
 <p>We can see that the ship on time column has either not been scraped properly or there is some other issue, as all the values being 100% does not make any sense. So we will remove it.</p>
-<div class="cell" data-execution_count="58">
+<div class="cell" data-execution_count="17">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df.drop(columns<span class="op">=</span>[<span class="st">"Ship on Time"</span>])</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>df.columns</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="58">
+<div class="cell-output cell-output-display" data-execution_count="17">
 <pre><code>Index(['Name', 'Category', 'Daraz Mall', 'url', 'Original Price',
        'Discounted Price', 'Rating', 'Reviews', 'Seller', 'Seller Rating',
        'Chat Response Rate', 'Warranty', 'Return Time', 'Delivery Charges',
@@ -795,7 +795,7 @@ Data Type: int32</code></pre>
 <section id="processing-the-warranty-column" class="level3">
 <h3 class="anchored" data-anchor-id="processing-the-warranty-column">Processing the <code>Warranty</code> Column</h3>
 <p>This column contains the length of the period the warranty is valid for, but we need to parse this in order to convert it to a number value.</p>
-<div class="cell" data-execution_count="59">
+<div class="cell" data-execution_count="18">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Values in Warranty Column: </span><span class="ch">\n</span><span class="st">"</span>)</span>
@@ -819,7 +819,7 @@ Data Type: int32</code></pre>
 </div>
 </div>
 <p>Converting the strings to easily interpretable strings for further processing</p>
-<div class="cell" data-execution_count="60">
+<div class="cell" data-execution_count="19">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>df.loc[df[<span class="st">'Warranty'</span>] <span class="op">==</span> <span class="st">'No warranty'</span>, <span class="st">'Warranty'</span>] <span class="op">=</span> <span class="st">'0'</span></span>
@@ -852,7 +852,7 @@ Data Type: int32</code></pre>
 </div>
 <p>Converting the column to int by representing them with the unit of months</p>
 <p>Note: NaN in this column represents lifetime warranty, as we cannot include infinity in statistical analysis</p>
-<div class="cell" data-execution_count="61">
+<div class="cell" data-execution_count="20">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>warranty <span class="op">=</span> pd.Series([<span class="dv">0</span> <span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="bu">len</span>(df))])</span>
@@ -912,7 +912,7 @@ Data Type: int32</code></pre>
 <h3 class="anchored" data-anchor-id="processing-the-return-column">Processing the <code>Return</code> Column</h3>
 <p>This column, similar to <code>Warranty</code>, represents the return policy, along with the period allowed.</p>
 <p>Analysing unique values in the column</p>
-<div class="cell" data-execution_count="62">
+<div class="cell" data-execution_count="21">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Values in Return Column"</span>)</span>
@@ -924,13 +924,13 @@ Data Type: int32</code></pre>
 </div>
 </div>
 <p>We can see that this column was also not extracted properly, as there is only one type of value. So we drop it.</p>
-<div class="cell" data-execution_count="63">
+<div class="cell" data-execution_count="22">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df.drop(columns<span class="op">=</span>[<span class="st">"Return Time"</span>])</span>
 <span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>df.columns</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="63">
+<div class="cell-output cell-output-display" data-execution_count="22">
 <pre><code>Index(['Name', 'Category', 'Daraz Mall', 'url', 'Original Price',
        'Discounted Price', 'Rating', 'Reviews', 'Seller', 'Seller Rating',
        'Chat Response Rate', 'Warranty', 'Delivery Charges', 'Brand',
@@ -943,7 +943,7 @@ Data Type: int32</code></pre>
 <h3 class="anchored" data-anchor-id="processing-the-delivery-charges-and-answered-questions-column">Processing the <code>Delivery Charges</code> and <code>Answered Questions</code> Column</h3>
 <p>These columns contains the additional charges for delivery of the product, and the number of customer questions answered by the seller under the product.</p>
 <p>Convert the columns to int</p>
-<div class="cell" data-execution_count="64">
+<div class="cell" data-execution_count="23">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>df.loc[df[<span class="st">'Delivery Charges'</span>] <span class="op">==</span> <span class="st">'Free'</span>, <span class="st">'Delivery Charges'</span>] <span class="op">=</span> <span class="st">'0'</span></span>
@@ -959,7 +959,7 @@ Data Type: int32</code></pre>
 </details>
 </div>
 <p>Checking statistics</p>
-<div class="cell" data-execution_count="65">
+<div class="cell" data-execution_count="24">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb33"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>display(df[[<span class="st">"Delivery Charges"</span>, <span class="st">"Answered Questions"</span>]].describe().loc[[<span class="st">"mean"</span>, <span class="st">"std"</span>, <span class="st">"min"</span>, <span class="st">"max"</span>]])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1008,7 +1008,7 @@ Data Type: int32</code></pre>
 <h3 class="anchored" data-anchor-id="some-other-odd-jobs">Some other odd jobs</h3>
 <p>Removing <code>SFO</code> Column</p>
 <p>The column represents whether the product is shipped from overseas. But, all the entries are false, so there was some issue when collecting the data. Hence, we remove this column too.</p>
-<div class="cell" data-execution_count="66">
+<div class="cell" data-execution_count="25">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df[<span class="st">"SFO"</span>].unique())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1017,13 +1017,13 @@ Data Type: int32</code></pre>
 <pre><code>[False]</code></pre>
 </div>
 </div>
-<div class="cell" data-execution_count="67">
+<div class="cell" data-execution_count="26">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>df <span class="op">=</span> df.drop(columns<span class="op">=</span>[<span class="st">"SFO"</span>])</span>
 <span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>df.columns</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="67">
+<div class="cell-output cell-output-display" data-execution_count="26">
 <pre><code>Index(['Name', 'Category', 'Daraz Mall', 'url', 'Original Price',
        'Discounted Price', 'Rating', 'Reviews', 'Seller', 'Seller Rating',
        'Chat Response Rate', 'Warranty', 'Delivery Charges', 'Brand',
@@ -1033,7 +1033,7 @@ Data Type: int32</code></pre>
 </div>
 <p>Fixing Category Formatting</p>
 <p>This column represents the category along with all the subcategories of the product</p>
-<div class="cell" data-execution_count="68">
+<div class="cell" data-execution_count="27">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Before"</span>)</span>
@@ -1059,12 +1059,12 @@ Groceries, Canned, Dry &amp; Packaged Foods, Grains, Beans &amp; Pulses, Lentils
 </section>
 <section id="final-analysis-of-the-dataset" class="level3">
 <h3 class="anchored" data-anchor-id="final-analysis-of-the-dataset">Final Analysis of the Dataset</h3>
-<div class="cell" data-execution_count="69">
+<div class="cell" data-execution_count="28">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>df.describe(include<span class="op">=</span><span class="st">"all"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="69">
+<div class="cell-output cell-output-display" data-execution_count="28">
 <div>
 
 
@@ -1307,7 +1307,7 @@ Groceries, Canned, Dry &amp; Packaged Foods, Grains, Beans &amp; Pulses, Lentils
 </div>
 </div>
 <p>Remaining Columns Described</p>
-<div class="cell" data-execution_count="70">
+<div class="cell" data-execution_count="29">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(df.dtypes)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -1341,7 +1341,7 @@ dtype: object</code></pre>
 .
 </div>
 <p>Finally, we save the processed dataset</p>
-<div class="cell" data-execution_count="71">
+<div class="cell" data-execution_count="30">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb43"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a>df.to_csv(path_or_buf<span class="op">=</span><span class="st">"final_dataset.csv"</span>)</span>
@@ -1356,7 +1356,7 @@ dtype: object</code></pre>
 <h3 class="anchored" data-anchor-id="univariate-analysis">Univariate Analysis</h3>
 <section id="functions-to-display-graphs" class="level4">
 <h4 class="anchored" data-anchor-id="functions-to-display-graphs">Functions To Display Graphs</h4>
-<div class="cell" data-execution_count="72">
+<div class="cell" data-execution_count="31">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a></span>
@@ -1407,13 +1407,13 @@ dtype: object</code></pre>
 </section>
 <section id="data-visualisation" class="level4">
 <h4 class="anchored" data-anchor-id="data-visualisation">Data Visualisation</h4>
-<p>Each numerical column is visualised using histograms, box plots, Kernel Estimation Density and Violin Plots.</p>
+<p>Each numerical column is visualised using histograms, box plots and Kernel Density Estimation plots.</p>
 <p>For the column, ‘Original Price’, the values have been split and visualised using two separate plots for each, to account for the fact that the bulk of the data lies towards the lower values but there are some outliers towards the extreme end.</p>
 </section>
 <section id="original-price" class="level4">
 <h4 class="anchored" data-anchor-id="original-price">Original Price</h4>
 <p>These plots visualise the Original Price values less than the defined threshold (5000)</p>
-<div class="cell" data-execution_count="73">
+<div class="cell" data-execution_count="32">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a></span>
@@ -1450,7 +1450,7 @@ dtype: object</code></pre>
 </div>
 </div>
 <p>These plots visualise the Original Price values greater than or equal to the defined threshold (5000)</p>
-<div class="cell" data-execution_count="74">
+<div class="cell" data-execution_count="33">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb46"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a></span>
@@ -1487,7 +1487,7 @@ dtype: object</code></pre>
 <section id="discounted-prices" class="level4">
 <h4 class="anchored" data-anchor-id="discounted-prices">Discounted Prices</h4>
 <p>These plots visualise the Discounted Price values less than the defined threshold (5000)</p>
-<div class="cell" data-execution_count="75">
+<div class="cell" data-execution_count="34">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a></span>
@@ -1523,7 +1523,7 @@ dtype: object</code></pre>
 </div>
 </div>
 <p>These plots visualise the Original Price values greater than or equal to the defined threshold (5000)</p>
-<div class="cell" data-execution_count="76">
+<div class="cell" data-execution_count="35">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb48"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a></span>
@@ -1560,7 +1560,7 @@ dtype: object</code></pre>
 <section id="discount" class="level4">
 <h4 class="anchored" data-anchor-id="discount">Discount</h4>
 <p>These plots visualise the Difference between the Original Prices and discounted prices, giving us the distribution of the discounts given on each product</p>
-<div class="cell" data-execution_count="77">
+<div class="cell" data-execution_count="36">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb49"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a></span>
@@ -1601,7 +1601,7 @@ dtype: object</code></pre>
 <section id="ratings" class="level4">
 <h4 class="anchored" data-anchor-id="ratings">Ratings</h4>
 <p>Visualisation of the distribution of rating shows that most of our ratings lie on extreme ends, a rating of zero or five. Further reinforced by the KDE shown below.</p>
-<div class="cell" data-execution_count="78">
+<div class="cell" data-execution_count="37">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb50"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a></span>
@@ -1638,7 +1638,7 @@ dtype: object</code></pre>
 <h4 class="anchored" data-anchor-id="number-of-reviews">Number of Reviews</h4>
 <p>Number of Reviews lie mostly towards the lower extreme end with some outliers towards the highest extreme. So to be able to visualise the data better, it has been split on the threshold of 500.</p>
 <p>The following plots display the visualisation of Number of Reviews which fall in the threshold below 500.</p>
-<div class="cell" data-execution_count="79">
+<div class="cell" data-execution_count="38">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb51"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a></span>
@@ -1674,7 +1674,7 @@ dtype: object</code></pre>
 </div>
 </div>
 <p>The following plots display the visualisation of Number of Reviews which fall in the threshold above and equal to 500.</p>
-<div class="cell" data-execution_count="80">
+<div class="cell" data-execution_count="39">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb52"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a></span>
@@ -1712,7 +1712,7 @@ dtype: object</code></pre>
 <section id="seller-rating" class="level4">
 <h4 class="anchored" data-anchor-id="seller-rating">Seller Rating</h4>
 <p>Visualisation of the Seller Rating shows that most sellers have a high rating as the bulk of the data is above 0.8.</p>
-<div class="cell" data-execution_count="81">
+<div class="cell" data-execution_count="40">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb53"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a></span>
@@ -1748,7 +1748,7 @@ dtype: object</code></pre>
 <section id="chat-response-rate" class="level4">
 <h4 class="anchored" data-anchor-id="chat-response-rate">Chat Response Rate</h4>
 <p>Chat Response Rate also lies towards the higher end of its range</p>
-<div class="cell" data-execution_count="82">
+<div class="cell" data-execution_count="41">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb54"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a></span>
@@ -1782,7 +1782,7 @@ dtype: object</code></pre>
 <section id="warranty" class="level4">
 <h4 class="anchored" data-anchor-id="warranty">Warranty</h4>
 <p>Most of the warranty values were 0 as most of the products did not have warranties, and a few products which were outliers had warranty. The warranty is in months in the data. To display the data better in the graphs the warranty frequency values were log scaled.</p>
-<div class="cell" data-execution_count="83">
+<div class="cell" data-execution_count="42">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb55"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Log Scale</span></span>
@@ -1818,7 +1818,7 @@ dtype: object</code></pre>
 <section id="delivery-charges" class="level4">
 <h4 class="anchored" data-anchor-id="delivery-charges">Delivery Charges</h4>
 <p>Most sellers did not take delivery charges and the ones who did not charge high amounts.</p>
-<div class="cell" data-execution_count="84">
+<div class="cell" data-execution_count="43">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb56"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a></span>
@@ -1853,7 +1853,7 @@ dtype: object</code></pre>
 <h4 class="anchored" data-anchor-id="answered-questions">Answered Questions</h4>
 <p>90% of the questions were left unanswered by the sellers as can be visualised below</p>
 <p>While the bulk of the data is towards the left extreme of the data, their are still values that lie at the other extreme, so again we have split the visualisation into two parts where the first part displays the Answered questions less than a defined threshold, which is 200.</p>
-<div class="cell" data-execution_count="85">
+<div class="cell" data-execution_count="44">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb57"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a></span>
@@ -1887,7 +1887,7 @@ dtype: object</code></pre>
 </div>
 </div>
 <p>The second part displays the Answered Questions that are greater than a defined threshold, which is 200.</p>
-<div class="cell" data-execution_count="86">
+<div class="cell" data-execution_count="45">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb58"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb58-1"><a href="#cb58-1" aria-hidden="true" tabindex="-1"></a></span>
@@ -1914,20 +1914,232 @@ dtype: object</code></pre>
 <p><img src="index_files/figure-html/cell-44-output-1.png" class="img-fluid"></p>
 </div>
 </div>
+</section>
+<section id="subcategories-visualised" class="level4">
+<h4 class="anchored" data-anchor-id="subcategories-visualised">Subcategories Visualised</h4>
+<p>We show the proportion of all subcategories in each category in the following section.</p>
+<div class="cell" data-execution_count="46">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb59"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb59-1"><a href="#cb59-1" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'Main Category'</span>] <span class="op">=</span> df[<span class="st">'Category'</span>].<span class="bu">apply</span>(<span class="kw">lambda</span> x: x.split(<span class="st">','</span>)[<span class="dv">0</span>].strip())</span>
+<span id="cb59-2"><a href="#cb59-2" aria-hidden="true" tabindex="-1"></a>df[<span class="st">'Subcategory'</span>] <span class="op">=</span> df[<span class="st">'Category'</span>].<span class="bu">apply</span>(<span class="kw">lambda</span> x: x.split(<span class="st">','</span>)[<span class="dv">1</span>].strip())</span>
+<span id="cb59-3"><a href="#cb59-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-4"><a href="#cb59-4" aria-hidden="true" tabindex="-1"></a>grouped <span class="op">=</span> df.groupby([<span class="st">'Main Category'</span>, <span class="st">'Subcategory'</span>]).size().reset_index(name<span class="op">=</span><span class="st">'Count'</span>)</span>
+<span id="cb59-5"><a href="#cb59-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-6"><a href="#cb59-6" aria-hidden="true" tabindex="-1"></a>main_categories <span class="op">=</span> grouped[<span class="st">'Main Category'</span>].unique()</span>
+<span id="cb59-7"><a href="#cb59-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-8"><a href="#cb59-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> category <span class="kw">in</span> main_categories:</span>
+<span id="cb59-9"><a href="#cb59-9" aria-hidden="true" tabindex="-1"></a>    sub_data <span class="op">=</span> grouped[grouped[<span class="st">'Main Category'</span>] <span class="op">==</span> category]</span>
+<span id="cb59-10"><a href="#cb59-10" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb59-11"><a href="#cb59-11" aria-hidden="true" tabindex="-1"></a>    plt.figure(figsize<span class="op">=</span>(<span class="dv">4</span>, <span class="dv">4</span>))</span>
+<span id="cb59-12"><a href="#cb59-12" aria-hidden="true" tabindex="-1"></a>    wedges, texts, autotexts <span class="op">=</span> plt.pie(sub_data[<span class="st">'Count'</span>], labels<span class="op">=</span><span class="va">None</span>, autopct<span class="op">=</span><span class="st">'</span><span class="sc">%1.1f%%</span><span class="st">'</span>, startangle<span class="op">=</span><span class="dv">140</span>)</span>
+<span id="cb59-13"><a href="#cb59-13" aria-hidden="true" tabindex="-1"></a>    plt.title(<span class="ss">f"Subcategories for </span><span class="sc">{</span>category<span class="sc">}</span><span class="ss">"</span>, pad<span class="op">=</span><span class="dv">20</span>)</span>
+<span id="cb59-14"><a href="#cb59-14" aria-hidden="true" tabindex="-1"></a>    plt.axis(<span class="st">'equal'</span>)  </span>
+<span id="cb59-15"><a href="#cb59-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-16"><a href="#cb59-16" aria-hidden="true" tabindex="-1"></a>    plt.legend(sub_data[<span class="st">'Subcategory'</span>], loc<span class="op">=</span><span class="st">'center left'</span>, bbox_to_anchor<span class="op">=</span>(<span class="dv">1</span>, <span class="fl">0.5</span>), title<span class="op">=</span><span class="st">'Subcategories'</span>)</span>
+<span id="cb59-17"><a href="#cb59-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb59-18"><a href="#cb59-18" aria-hidden="true" tabindex="-1"></a>    plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<p><img src="index_files/figure-html/cell-45-output-1.png" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="index_files/figure-html/cell-45-output-2.png" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="index_files/figure-html/cell-45-output-3.png" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="index_files/figure-html/cell-45-output-4.png" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="index_files/figure-html/cell-45-output-5.png" class="img-fluid"></p>
+</div>
+</div>
 <p>As we can see, all the column distributions seem to make sense, so we need not make any further changes to them. Our plots helped us understand theses distributions better, as described above, and also helped us ensure there are no big issues with the values.</p>
 </section>
 </section>
-<section id="bivariate-analysis" class="level3">
-<h3 class="anchored" data-anchor-id="bivariate-analysis">Bivariate Analysis</h3>
-</section>
 <section id="multivariate-analysis" class="level3">
 <h3 class="anchored" data-anchor-id="multivariate-analysis">Multivariate Analysis</h3>
+<section id="pairplot" class="level4">
+<h4 class="anchored" data-anchor-id="pairplot">Pairplot</h4>
+<p>We visualise relationships between columns by using scatterplots for each pair</p>
+<div class="cell" data-execution_count="47">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb60"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb60-1"><a href="#cb60-1" aria-hidden="true" tabindex="-1"></a>numerical_vars <span class="op">=</span> [<span class="st">'Original Price'</span>, <span class="st">'Discounted Price'</span>, <span class="st">'Rating'</span>, <span class="st">'Reviews'</span>, </span>
+<span id="cb60-2"><a href="#cb60-2" aria-hidden="true" tabindex="-1"></a>                  <span class="st">'Seller Rating'</span>, <span class="st">'Chat Response Rate'</span>, <span class="st">'Warranty'</span>, </span>
+<span id="cb60-3"><a href="#cb60-3" aria-hidden="true" tabindex="-1"></a>                  <span class="st">'Delivery Charges'</span>, <span class="st">'Answered Questions'</span>]</span>
+<span id="cb60-4"><a href="#cb60-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-5"><a href="#cb60-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Select the numerical data</span></span>
+<span id="cb60-6"><a href="#cb60-6" aria-hidden="true" tabindex="-1"></a>numerical_data <span class="op">=</span> data[numerical_vars]</span>
+<span id="cb60-7"><a href="#cb60-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb60-8"><a href="#cb60-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the pair plot</span></span>
+<span id="cb60-9"><a href="#cb60-9" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">12</span>))</span>
+<span id="cb60-10"><a href="#cb60-10" aria-hidden="true" tabindex="-1"></a>sns.pairplot(numerical_data)</span>
+<span id="cb60-11"><a href="#cb60-11" aria-hidden="true" tabindex="-1"></a>plt.suptitle(<span class="st">'Pair Plot of All Selected Numerical Variables'</span>, y<span class="op">=</span><span class="fl">1.02</span>)  <span class="co"># Adjust title position</span></span>
+<span id="cb60-12"><a href="#cb60-12" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<pre><code>&lt;Figure size 1200x1200 with 0 Axes&gt;</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="index_files/figure-html/cell-46-output-2.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="correlation-heatmap" class="level4">
+<h4 class="anchored" data-anchor-id="correlation-heatmap">Correlation Heatmap</h4>
+<p>To get a better understanding of the relationships, we can make a heatmap of the correlation.</p>
+<div class="cell" data-execution_count="48">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb62"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb62-1"><a href="#cb62-1" aria-hidden="true" tabindex="-1"></a>numerical_data <span class="op">=</span> data[numerical_vars]</span>
+<span id="cb62-2"><a href="#cb62-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-3"><a href="#cb62-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the correlation matrix</span></span>
+<span id="cb62-4"><a href="#cb62-4" aria-hidden="true" tabindex="-1"></a>corr_matrix <span class="op">=</span> numerical_data.corr()</span>
+<span id="cb62-5"><a href="#cb62-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb62-6"><a href="#cb62-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a heatmap to visualize the correlation matrix</span></span>
+<span id="cb62-7"><a href="#cb62-7" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">8</span>))</span>
+<span id="cb62-8"><a href="#cb62-8" aria-hidden="true" tabindex="-1"></a>sns.heatmap(corr_matrix, annot<span class="op">=</span><span class="va">True</span>, fmt<span class="op">=</span><span class="st">".2f"</span>, cmap<span class="op">=</span><span class="st">'coolwarm'</span>)</span>
+<span id="cb62-9"><a href="#cb62-9" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Heatmap of Correlation Matrix'</span>)</span>
+<span id="cb62-10"><a href="#cb62-10" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<p><img src="index_files/figure-html/cell-47-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>We can see that the high correlations all seem to make sense, such as original price and discounted price. These two will obviously scale very closely together, especially considering they are more often that not, the same.</p>
+</section>
+<section id="more-than-2-variables" class="level4">
+<h4 class="anchored" data-anchor-id="more-than-2-variables">More than 2 Variables</h4>
+<p>Visualising how two variables are related to another variable with a 3D Scatter Plot</p>
+<div class="cell" data-execution_count="49">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb63"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb63-1"><a href="#cb63-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 3D Scatter Plot</span></span>
+<span id="cb63-2"><a href="#cb63-2" aria-hidden="true" tabindex="-1"></a>fig <span class="op">=</span> plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">8</span>))</span>
+<span id="cb63-3"><a href="#cb63-3" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> fig.add_subplot(<span class="dv">111</span>, projection<span class="op">=</span><span class="st">'3d'</span>)</span>
+<span id="cb63-4"><a href="#cb63-4" aria-hidden="true" tabindex="-1"></a>ax.scatter(df[<span class="st">'Seller Rating'</span>], df[<span class="st">'Chat Response Rate'</span>], df[<span class="st">'Rating'</span>])</span>
+<span id="cb63-5"><a href="#cb63-5" aria-hidden="true" tabindex="-1"></a>ax.set_xlabel(<span class="st">'Seller Rating'</span>)</span>
+<span id="cb63-6"><a href="#cb63-6" aria-hidden="true" tabindex="-1"></a>ax.set_ylabel(<span class="st">'Chat Response Rate'</span>)</span>
+<span id="cb63-7"><a href="#cb63-7" aria-hidden="true" tabindex="-1"></a>ax.set_zlabel(<span class="st">'Product Rating'</span>)</span>
+<span id="cb63-8"><a href="#cb63-8" aria-hidden="true" tabindex="-1"></a>ax.zaxis.labelpad<span class="op">=-</span><span class="dv">3</span></span>
+<span id="cb63-9"><a href="#cb63-9" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'3D Scatter Plot'</span>)</span>
+<span id="cb63-10"><a href="#cb63-10" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<p><img src="index_files/figure-html/cell-48-output-1.png" class="img-fluid"></p>
+</div>
+</div>
+<p>Next, we look at some bubble plots.</p>
+<div class="cell" data-execution_count="50">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb64"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb64-1"><a href="#cb64-1" aria-hidden="true" tabindex="-1"></a>size_var <span class="op">=</span> <span class="st">'Reviews'</span></span>
+<span id="cb64-2"><a href="#cb64-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb64-3"><a href="#cb64-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Create the bubble chart</span></span>
+<span id="cb64-4"><a href="#cb64-4" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb64-5"><a href="#cb64-5" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(data<span class="op">=</span>data, x<span class="op">=</span><span class="st">'Rating'</span>, y<span class="op">=</span><span class="st">'Reviews'</span>, size<span class="op">=</span><span class="st">'Seller Rating'</span>, legend<span class="op">=</span><span class="va">False</span>, sizes<span class="op">=</span>(<span class="dv">20</span>, <span class="dv">200</span>))</span>
+<span id="cb64-6"><a href="#cb64-6" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Bubble Chart: Rating vs Reviews (Bubble Size: Seller Rating)'</span>)</span>
+<span id="cb64-7"><a href="#cb64-7" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Rating'</span>)</span>
+<span id="cb64-8"><a href="#cb64-8" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Reviews'</span>)</span>
+<span id="cb64-9"><a href="#cb64-9" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb64-10"><a href="#cb64-10" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb64-11"><a href="#cb64-11" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(data<span class="op">=</span>data, x<span class="op">=</span><span class="st">'Chat Response Rate'</span>, y<span class="op">=</span><span class="st">'Seller Rating'</span>, size<span class="op">=</span><span class="st">'Reviews'</span>, legend<span class="op">=</span><span class="va">False</span>, sizes<span class="op">=</span>(<span class="dv">20</span>, <span class="dv">200</span>))</span>
+<span id="cb64-12"><a href="#cb64-12" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Bubble Chart: Chat Response Rate vs Seller Rating (Bubble Size: Reviews)'</span>)</span>
+<span id="cb64-13"><a href="#cb64-13" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Chat Response Time'</span>)</span>
+<span id="cb64-14"><a href="#cb64-14" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Seller Rating'</span>)</span>
+<span id="cb64-15"><a href="#cb64-15" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb64-16"><a href="#cb64-16" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb64-17"><a href="#cb64-17" aria-hidden="true" tabindex="-1"></a>sns.scatterplot(data<span class="op">=</span>data, x<span class="op">=</span><span class="st">'Delivery Charges'</span>, y<span class="op">=</span><span class="st">'Original Price'</span>, size<span class="op">=</span><span class="st">'Discounted Price'</span>, legend<span class="op">=</span><span class="va">False</span>, sizes<span class="op">=</span>(<span class="dv">20</span>, <span class="dv">200</span>))</span>
+<span id="cb64-18"><a href="#cb64-18" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">'Bubble Chart: Delivery Charges vs Original Price (Bubble Size: Discounted Price)'</span>)</span>
+<span id="cb64-19"><a href="#cb64-19" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">'Delivery Charges'</span>)</span>
+<span id="cb64-20"><a href="#cb64-20" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">'Original Price'</span>)</span>
+<span id="cb64-21"><a href="#cb64-21" aria-hidden="true" tabindex="-1"></a>plt.show()</span>
+<span id="cb64-22"><a href="#cb64-22" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<p><img src="index_files/figure-html/cell-49-output-1.png" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="index_files/figure-html/cell-49-output-2.png" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="index_files/figure-html/cell-49-output-3.png" class="img-fluid"></p>
+</div>
+</div>
+<p>… and some joint plots</p>
+<div class="cell" data-execution_count="51">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb65"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb65-1"><a href="#cb65-1" aria-hidden="true" tabindex="-1"></a>pairs <span class="op">=</span> [</span>
+<span id="cb65-2"><a href="#cb65-2" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'Original Price'</span>, <span class="st">'Discounted Price'</span>),</span>
+<span id="cb65-3"><a href="#cb65-3" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'Rating'</span>, <span class="st">'Reviews'</span>),</span>
+<span id="cb65-4"><a href="#cb65-4" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'Seller Rating'</span>, <span class="st">'Chat Response Rate'</span>)</span>
+<span id="cb65-5"><a href="#cb65-5" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb65-6"><a href="#cb65-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb65-7"><a href="#cb65-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Create joint plots for each pair</span></span>
+<span id="cb65-8"><a href="#cb65-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> x_var, y_var <span class="kw">in</span> pairs:</span>
+<span id="cb65-9"><a href="#cb65-9" aria-hidden="true" tabindex="-1"></a>    sns.jointplot(data<span class="op">=</span>data, x<span class="op">=</span>x_var, y<span class="op">=</span>y_var, kind<span class="op">=</span><span class="st">'scatter'</span>, marginal_kws<span class="op">=</span><span class="bu">dict</span>(bins<span class="op">=</span><span class="dv">25</span>, fill<span class="op">=</span><span class="va">False</span>))</span>
+<span id="cb65-10"><a href="#cb65-10" aria-hidden="true" tabindex="-1"></a>    plt.suptitle(<span class="ss">f'Joint Plot of </span><span class="sc">{</span>x_var<span class="sc">}</span><span class="ss"> vs </span><span class="sc">{</span>y_var<span class="sc">}</span><span class="ss">'</span>, y<span class="op">=</span><span class="fl">1.02</span>)</span>
+<span id="cb65-11"><a href="#cb65-11" aria-hidden="true" tabindex="-1"></a>    plt.show()</span>
+<span id="cb65-12"><a href="#cb65-12" aria-hidden="true" tabindex="-1"></a>additional_pairs <span class="op">=</span> [</span>
+<span id="cb65-13"><a href="#cb65-13" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'Delivery Charges'</span>, <span class="st">'Original Price'</span>),</span>
+<span id="cb65-14"><a href="#cb65-14" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'Chat Response Rate'</span>, <span class="st">'Reviews'</span>),</span>
+<span id="cb65-15"><a href="#cb65-15" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'Rating'</span>, <span class="st">'Seller Rating'</span>),</span>
+<span id="cb65-16"><a href="#cb65-16" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'Warranty'</span>, <span class="st">'Original Price'</span>),</span>
+<span id="cb65-17"><a href="#cb65-17" aria-hidden="true" tabindex="-1"></a>    (<span class="st">'Answered Questions'</span>, <span class="st">'Reviews'</span>)</span>
+<span id="cb65-18"><a href="#cb65-18" aria-hidden="true" tabindex="-1"></a>]</span>
+<span id="cb65-19"><a href="#cb65-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb65-20"><a href="#cb65-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Create joint plots for each additional pair</span></span>
+<span id="cb65-21"><a href="#cb65-21" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> x_var, y_var <span class="kw">in</span> additional_pairs:</span>
+<span id="cb65-22"><a href="#cb65-22" aria-hidden="true" tabindex="-1"></a>    sns.jointplot(data<span class="op">=</span>data, x<span class="op">=</span>x_var, y<span class="op">=</span>y_var, kind<span class="op">=</span><span class="st">'scatter'</span>, marginal_kws<span class="op">=</span><span class="bu">dict</span>(bins<span class="op">=</span><span class="dv">25</span>, fill<span class="op">=</span><span class="va">False</span>))</span>
+<span id="cb65-23"><a href="#cb65-23" aria-hidden="true" tabindex="-1"></a>    plt.suptitle(<span class="ss">f'Joint Plot of </span><span class="sc">{</span>x_var<span class="sc">}</span><span class="ss"> vs </span><span class="sc">{</span>y_var<span class="sc">}</span><span class="ss">'</span>, y<span class="op">=</span><span class="fl">1.02</span>)</span>
+<span id="cb65-24"><a href="#cb65-24" aria-hidden="true" tabindex="-1"></a>    plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-display">
+<p><img src="index_files/figure-html/cell-50-output-1.png" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="index_files/figure-html/cell-50-output-2.png" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="index_files/figure-html/cell-50-output-3.png" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="index_files/figure-html/cell-50-output-4.png" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="index_files/figure-html/cell-50-output-5.png" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="index_files/figure-html/cell-50-output-6.png" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="index_files/figure-html/cell-50-output-7.png" class="img-fluid"></p>
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="index_files/figure-html/cell-50-output-8.png" class="img-fluid"></p>
+</div>
+</div>
+<p>Again, this process has led us to better understand the relationships among the columns in our dataset, along with verifying that they make sense. This gives us further reassurance that the data has been collected and processed correctly. With it thoroughly processed and analysed, we move on to our next steps.</p>
+</section>
 </section>
 </section>
 <section id="section-3-project-direction-and-research-questions" class="level2">
 <h2 class="anchored" data-anchor-id="section-3-project-direction-and-research-questions">Section 3: Project Direction and Research Questions</h2>
+<p>After a thorough exploration of the data, we have decided to revisit our research questions and revise them to reflect our deeper understanding of the data. We have come up with 2 research questions that seek to answer the general question of ‘what differentiates products that perform from products that don’t’.</p>
+<p>Formally, these are our finalised research questions:</p>
+<section id="what-feature-variables-should-sellers-optimise-on-their-storefronts-for-maximum-product-ratings" class="level5">
+<h5 class="anchored" data-anchor-id="what-feature-variables-should-sellers-optimise-on-their-storefronts-for-maximum-product-ratings">1. What Feature Variables Should Sellers Optimise On Their Storefronts For Maximum Product Ratings?</h5>
+</section>
+<section id="how-does-mistrust-in-products-manifest-in-the-data-and-what-can-we-do-about-it" class="level5">
+<h5 class="anchored" data-anchor-id="how-does-mistrust-in-products-manifest-in-the-data-and-what-can-we-do-about-it">2. How Does Mistrust In Products Manifest In The Data? (and what can we do about it?)</h5>
+<p>We will use <strong>machine learning</strong> and <strong>statistical analysis</strong> to answer these questions, and hopefully report on novel findings that fill in the gaps in our collective knowledge about what determines a well performing product on e-commerce marketplaces like Daraz.</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
