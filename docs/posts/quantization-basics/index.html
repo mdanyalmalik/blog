@@ -6,8 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Danyal Malik">
+<meta name="dcterms.date" content="2024-06-20">
 
-<title>Danyal’s Blog - Introduction</title>
+<title>Danyal’s Blog - Quantization Basics</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -155,14 +157,31 @@ gtag('config', 'G-0C1TC199G5', { 'anonymize_ip': true});
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Introduction</h1>
-                      </div>
+      <div class="quarto-title-block"><div><h1 class="title">Quantization Basics</h1><button type="button" class="btn code-tools-button dropdown-toggle" id="quarto-code-tools-menu" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi"></i> Code</button><ul class="dropdown-menu dropdown-menu-end" aria-labelelledby="quarto-code-tools-menu"><li><a id="quarto-show-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Show All Code</a></li><li><a id="quarto-hide-all-code" class="dropdown-item" href="javascript:void(0)" role="button">Hide All Code</a></li></ul></div></div>
+                                <div class="quarto-categories">
+                <div class="quarto-category">code</div>
+                <div class="quarto-category">ai</div>
+                <div class="quarto-category">quantization</div>
+              </div>
+                  </div>
   </div>
     
   
   <div class="quarto-title-meta">
 
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Danyal Malik </p>
+            </div>
+    </div>
       
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">June 20, 2024</p>
+      </div>
+    </div>
     
       
     </div>
@@ -178,6 +197,8 @@ gtag('config', 'G-0C1TC199G5', { 'anonymize_ip': true});
 
 
 
+<section id="introduction" class="level1">
+<h1>Introduction</h1>
 <p>Deep learning has a growing history of successes, but heavy algorithms running on large graphical processing units are far from ideal. A relatively new family of deep learning methods called quantized neural networks have appeared in answer to this discrepancy.</p>
 <section id="how-it-works" class="level2">
 <h2 class="anchored" data-anchor-id="how-it-works">How it works</h2>
@@ -211,11 +232,14 @@ gtag('config', 'G-0C1TC199G5', { 'anonymize_ip': true});
 <p>So far, we have only discussed uniform quantization, where the range of floating point numbers is divided uniformly into the range of integers. However, non-uniform quantization is also possible, where the range of floating point numbers is divided non-uniformly into the range of integers. We will not discuss non-uniform quantization in this article.</p>
 </section>
 </section>
+</section>
 <section id="code" class="level1">
 <h1>Code</h1>
 <section id="create-a-simple-tensor-with-random-items" class="level2">
 <h2 class="anchored" data-anchor-id="create-a-simple-tensor-with-random-items">Create a simple tensor with random items</h2>
 <div class="cell" data-execution_count="1">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Suppress scientific notation</span></span>
@@ -234,6 +258,7 @@ gtag('config', 'G-0C1TC199G5', { 'anonymize_ip': true});
 <span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Print the parameters</span></span>
 <span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(params)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>[127.48 -40.1    0.    89.74 124.38 -39.1  126.48  21.2  -35.99 124.16
    5.92  41.68  23.6  -26.4  -21.51 -20.6   94.49  85.07  70.11  76.91]</code></pre>
@@ -243,6 +268,8 @@ gtag('config', 'G-0C1TC199G5', { 'anonymize_ip': true});
 <section id="define-the-quantization-methods-and-quantize" class="level2">
 <h2 class="anchored" data-anchor-id="define-the-quantization-methods-and-quantize">Define the quantization methods and quantize</h2>
 <div class="cell" data-execution_count="5">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> clamp(params_q: np.array, lower_bound: <span class="bu">int</span>, upper_bound: <span class="bu">int</span>) <span class="op">-&gt;</span> np.array:</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    params_q[params_q <span class="op">&lt;</span> lower_bound] <span class="op">=</span> lower_bound</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    params_q[params_q <span class="op">&gt;</span> upper_bound] <span class="op">=</span> upper_bound</span>
@@ -290,6 +317,7 @@ gtag('config', 'G-0C1TC199G5', { 'anonymize_ip': true});
 <span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">''</span>)</span>
 <span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Symmetric scale: </span><span class="sc">{</span>symmetric_scale<span class="sc">}</span><span class="ss">'</span>)</span>
 <span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(symmetric_q)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Original:
 [127.48 -40.1    0.    89.74 124.38 -39.1  126.48  21.2  -35.99 124.16
@@ -305,6 +333,8 @@ Symmetric s: 1.003779527559055
 </div>
 </div>
 <div class="cell" data-execution_count="3">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Dequantize the parameters back to 32 bits</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>params_deq_asymmetric <span class="op">=</span> asymmetric_dequantize(asymmetric_q, asymmetric_scale, asymmetric_zero)</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>params_deq_symmetric <span class="op">=</span> symmetric_dequantize(symmetric_q, symmetric_scale)</span>
@@ -317,6 +347,7 @@ Symmetric s: 1.003779527559055
 <span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">''</span>)</span>
 <span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Dequantize Symmetric:'</span>)</span>
 <span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(np.<span class="bu">round</span>(params_deq_symmetric, <span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>Original:
 [127.48 -40.1    0.    89.74 124.38 -39.1  126.48  21.2  -35.99 124.16
@@ -332,9 +363,12 @@ Dequantize Symmetric:
 </div>
 </div>
 <div class="cell" data-execution_count="4">
+<details>
+<summary>Code</summary>
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the quantization error</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'</span><span class="sc">{</span><span class="st">"Asymmetric error: "</span><span class="sc">:&gt;20}{</span>np<span class="sc">.</span><span class="bu">round</span>(quantization_error(params, params_deq_asymmetric), <span class="dv">2</span>)<span class="sc">}</span><span class="ss">'</span>)</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'</span><span class="sc">{</span><span class="st">"Symmetric error: "</span><span class="sc">:&gt;20}{</span>np<span class="sc">.</span><span class="bu">round</span>(quantization_error(params, params_deq_symmetric), <span class="dv">2</span>)<span class="sc">}</span><span class="ss">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
 <div class="cell-output cell-output-stdout">
 <pre><code>  Asymmetric error: 0.03
    Symmetric error: 0.08</code></pre>
@@ -430,6 +464,57 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
+  const viewSource = window.document.getElementById('quarto-view-source') ||
+                     window.document.getElementById('quarto-code-tools-source');
+  if (viewSource) {
+    const sourceUrl = viewSource.getAttribute("data-quarto-source-url");
+    viewSource.addEventListener("click", function(e) {
+      if (sourceUrl) {
+        // rstudio viewer pane
+        if (/\bcapabilities=\b/.test(window.location)) {
+          window.open(sourceUrl);
+        } else {
+          window.location.href = sourceUrl;
+        }
+      } else {
+        const modal = new bootstrap.Modal(document.getElementById('quarto-embedded-source-code-modal'));
+        modal.show();
+      }
+      return false;
+    });
+  }
+  function toggleCodeHandler(show) {
+    return function(e) {
+      const detailsSrc = window.document.querySelectorAll(".cell > details > .sourceCode");
+      for (let i=0; i<detailsSrc.length; i++) {
+        const details = detailsSrc[i].parentElement;
+        if (show) {
+          details.open = true;
+        } else {
+          details.removeAttribute("open");
+        }
+      }
+      const cellCodeDivs = window.document.querySelectorAll(".cell > .sourceCode");
+      const fromCls = show ? "hidden" : "unhidden";
+      const toCls = show ? "unhidden" : "hidden";
+      for (let i=0; i<cellCodeDivs.length; i++) {
+        const codeDiv = cellCodeDivs[i];
+        if (codeDiv.classList.contains(fromCls)) {
+          codeDiv.classList.remove(fromCls);
+          codeDiv.classList.add(toCls);
+        } 
+      }
+      return false;
+    }
+  }
+  const hideAllCode = window.document.getElementById("quarto-hide-all-code");
+  if (hideAllCode) {
+    hideAllCode.addEventListener("click", toggleCodeHandler(false));
+  }
+  const showAllCode = window.document.getElementById("quarto-show-all-code");
+  if (showAllCode) {
+    showAllCode.addEventListener("click", toggleCodeHandler(true));
+  }
   function tippyHover(el, contentFn) {
     const config = {
       allowHTML: true,
