@@ -13,7 +13,10 @@ about:
     - icon: github
       text: Github
       href: https://github.com/mdanyalmalik
+    - icon: home
+      text: Web
+      href: https://danyalmalik.net
 
 ---
 
-Just messing around with random Deep Learning stuff tbh
+Please refer to my website for more details.
