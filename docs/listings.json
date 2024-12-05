@@ -3,6 +3,7 @@
     "listing": "/index.html",
     "items": [
       "/posts/quantization-basics/index.html",
+      "/posts/daraz-insights/index.html",
       "/posts/eda-webscraped-data/index.html",
       "/posts/hd-ai-generated-video/index.html",
       "/posts/ai-generated-video/index.html"
