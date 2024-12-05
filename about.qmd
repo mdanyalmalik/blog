@@ -4,6 +4,8 @@ title: "About"
 about:
   template: jolla
   links:
+    - text: Website
+      href: https://danyalmalik.net
     - icon: linkedin
       text: LinkedIn
       href: https://linkedin.com/in/mdanyalmalik
@@ -13,9 +15,6 @@ about:
     - icon: github
       text: Github
       href: https://github.com/mdanyalmalik
-    - icon: home
-      text: Web
-      href: https://danyalmalik.net
 
 ---
 
