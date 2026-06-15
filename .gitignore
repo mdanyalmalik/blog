@@ -1,3 +1,4 @@
 /.quarto/
 command.txt
 _wip
+**/*.quarto_ipynb
